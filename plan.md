@@ -5,7 +5,7 @@ Information about the planning of the project can be found here in the form of G
 
 # Gantt Charts
 
-![Main](/media/Gantt Chart for Main Workflow.png)
+![Main](/media/Gantt-Chart-for-Main-Workflow.png)
 *Main Gantt Chart*
 
 ![Planning](/media/Gantt%20Chart%20for%20Planning.png)
