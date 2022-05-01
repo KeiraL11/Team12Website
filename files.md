@@ -7,8 +7,8 @@ During our initial discussion as a group regarding how our game should look like
 
 ![SB1](/media/Storyboard1.PNG)
 *S.B.1*
- 
- 
+
+
 ![SB2](/media/Storyboard2.PNG)
 *S.B.2*
 
@@ -29,10 +29,10 @@ Based on our storyboards, we then designed a Use Case diagram (as shown in the "
 ![State_Diagram](/media/State_Diagram_4.png)
 *UML State Diagram*
 
-Based on our UML State Diagram, we were then able to plan out an Abstract Representation of the architecture of our game using UML Class Diagrams which is shown below: 
+Based on our UML State Diagram, we were then able to plan out an Abstract Representation of the architecture of our game using UML Class Diagrams which is shown below:
 
 ### Abstract ###
-![Abstract.R](/media/Abstract%20Architecture.png)
+![Abstract.R](/media/Abstract-Architecture.png)
 *Abstract Architecture Representation using UML*
 
 Once our implementation was complete, we were able to make the Concrete Representation of the architecture of our game using UML CLass Diagrams which is shown below:

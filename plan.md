@@ -8,16 +8,16 @@ Information about the planning of the project can be found here in the form of G
 ![Main](/media/Gantt-Chart-for-Main-Workflow.png)
 *Main Gantt Chart*
 
-![Planning](/media/Gantt%20Chart%20for%20Planning.png)
+![Planning](/media/Gantt-Chart-for-Planning.png)
 *Planning Gantt Chart*
 
-![Requirements](/media/Gantt%20Chart%20for%20Requirements.png)
+![Requirements](/media/Gantt-Chart-for-Requirements.png)
 *Requirements Gantt Chart*
 
-![Design](/media/Gantt%20Chart%20for%20Design.png)
+![Design](/media/Gantt-Chart-for-Design.png)
 *Design Gantt Chart*
 
-![Implementation](/media/Gantt%20Chart%20for%20Implementation.png)
+![Implementation](/media/Gantt-Chart-for-Implementation.png)
 *Implementation Gantt Chart*
 
 # Trello Board
