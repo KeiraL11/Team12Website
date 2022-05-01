@@ -23,7 +23,7 @@ During our initial discussion as a group regarding how our game should look like
 
 Based on our storyboards, we then designed a Use Case diagram (as shown in the "Use Case" section on our website"), based of which we then designed a State Diagram to show how we will transition between different states of the game. The UML State Diagram is shown below:
 
-# UML Diagrams
+# UML Diagrams for Assessment 1
 
 ### State Diagram
 ![State_Diagram](/media/State_Diagram_4.png)
@@ -35,7 +35,7 @@ Based on our UML State Diagram, we were then able to plan out an Abstract Repres
 ![Abstract.R](/media/Abstract-Architecture.png)
 *Abstract Architecture Representation using UML*
 
-Once our implementation was complete, we were able to make the Concrete Representation of the architecture of our game using UML CLass Diagrams which is shown below:
+Once our implementation was complete, we were able to make the Concrete Representation of the architecture of our game using UML Class Diagrams which is shown below:
 
 ### Concrete ###
 ![Concrete](/media/concrete.png)
@@ -44,3 +44,23 @@ Once our implementation was complete, we were able to make the Concrete Represen
 *Concrete Architecture Inheritance using UML*
 ![Relationships](/media/relationships.png)
 *Concrete Architecture Relationships using UML*
+
+
+# UML Diagrams for Assessment 2
+### State Diagram ###
+![State_Diagram](/media/a2State.png)
+*UML State Diagram for Assessment 2*
+
+From assessment 1, we extended the state diagram to include a shop screen. Based on this UML State Diagram, we were able to then plan out our Abstract architecture of the game.
+
+### Abstract ###
+![Abstract.R](/media/a2Abstract.png)
+*Abstract Architecture Representation using UML for Assessment 2*
+
+Once this was complete, we were able to make the Concrete Representation of the architecture of our extended game using UML class diagrams which is shown below:
+
+### Concrete ###
+![Concrete](/media/a2Concrete.png)
+*Concrete Architecture Representation using UML for Assessment 2*
+![Inheritence](/media/a2Inheritance.png)
+*Concrete Architecture Inheritance using UML for Assessment 2*
