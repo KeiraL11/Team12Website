@@ -43,25 +43,25 @@ Weeks are from the start of the project.
 ## Implementation
 During the Implementation stage of our project, we first came up with tasks as shown in the trello above. However, as we moved ahead, we decided that it would be better to have a separate trello just for implementation so that more detailed tasks could be added and chosen by team members to implement. These trello's are shown below:
 
-![Week 5](/media/Jan%2018th.PNG)
+![Week 5](/media/Jan-18th.PNG)
 *5.1*
-![Week 5](/media/21st%20Jan%20pre%20commit.PNG)
+![Week 5](/media/21st-Jan-pre-commit.PNG)
 *5.2*
-![Week 5](/media/23rd%20Jan%20pre%20commit.PNG)
+![Week 5](/media/23rd-Jan-pre-commit.PNG)
 *5.3*
-![Week 5](/media/24th%20Jan.PNG)
+![Week 5](/media/24th-Jan.PNG)
 *5.4*
-![Week 5](/media/25th%20jan.PNG)
+![Week 5](/media/25th-jan.PNG)
 *5.5*
-![Week 5](/media/26th%20Jan.PNG)
+![Week 5](/media/26th-Jan.PNG)
 *5.6*
-![Week 5](/media/Jan%2027th.PNG)
+![Week 5](/media/Jan-27th.PNG)
 *5.7*
-![Week 5](/media/28th%20Jan.PNG)
+![Week 5](/media/28th-Jan.PNG)
 *5.8*
-![Week 5](/media/29th%20Jan.PNG)
+![Week 5](/media/29th-Jan.PNG)
 *5.9*
-![Week 5](/media/31st%20Jan.PNG)
+![Week 5](/media/31st-Jan.PNG)
 *5.10*
-![Week 5](/media/1st%20feb.PNG)
+![Week 5](/media/1st-feb.PNG)
 *5.11*
