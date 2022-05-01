@@ -5,7 +5,7 @@ Information about the planning of the project can be found here in the form of G
 
 # Gantt Charts
 
-![Main](/media/Gantt%20Chart%20for%20Main%20Workflow.png)
+![Main](/media/Gantt Chart for Main Workflow.png)
 *Main Gantt Chart*
 
 ![Planning](/media/Gantt%20Chart%20for%20Planning.png)
@@ -20,7 +20,7 @@ Information about the planning of the project can be found here in the form of G
 ![Implementation](/media/Gantt%20Chart%20for%20Implementation.png)
 *Implementation Gantt Chart*
 
-# Trello Board 
+# Trello Board
 ## Documentation
 Screenshots of our Trello board throughout the project will be listed here, to show how our project plan progressed over time.
 Weeks are from the start of the project.
@@ -65,4 +65,3 @@ During the Implementation stage of our project, we first came up with tasks as s
 *5.10*
 ![Week 5](/media/1st%20feb.PNG)
 *5.11*
-
