@@ -9,7 +9,7 @@ This game is made by Bass<sub>2</sub> (Team 14 for Assessment 1 and Team 12 for 
 The game can be downloaded [here](/jar/yorkpirates-1.0.1.jar)
 
 - [**Home**]() - This page will go over what York Pirates! is, how to play it, and provide information about how our code works.
-- [**GitHub**](https://github.com/engteam14/yorkpirates) - Our GitHub repository contains all the code for the project, as well as downloads.
+- [**GitHub**](https://github.com/KeiraL11/yorkpirates-Team12) - Our GitHub repository contains all the code for the project, as well as downloads.
 - [**Deliverables**](/deliverables) - All the project deliverables will be listed here.
 - [**Plan**](/plan) - Information about how the project was planned throughout development is shown here.
 - [**Use Case**](/usecase) - Shows our planned use case for the game.
