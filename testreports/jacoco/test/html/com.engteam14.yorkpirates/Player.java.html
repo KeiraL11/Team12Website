@@ -182,8 +182,8 @@ public class Player extends GameObject {
     public void takeDamage(float damage){
 <span class="fc" id="L183">        timeLastHit = TimeUtils.millis();</span>
         // If the immunity power up is active, take no damage.
-<span class="pc bpc" id="L185" title="1 of 2 branches missed.">        if (immune){</span>
-<span class="nc" id="L186">            damage = 0;</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">        if (immune){</span>
+<span class="fc" id="L186">            damage = 0;</span>
         }
         // The damage that the player takes changes depending on difficulty level
         // enemyDamageMultiplier changes depending on the difficulty methods.
@@ -204,7 +204,7 @@ public class Player extends GameObject {
      */
     public void timerManager(){
         // Blood splash calculations
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">        if(doBloodSplash){</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">        if(doBloodSplash){</span>
 <span class="fc bfc" id="L208" title="All 2 branches covered.">            if(splashTime &gt; 1){</span>
 <span class="fc" id="L209">                doBloodSplash = false;</span>
 <span class="fc" id="L210">                splashTime = 0;</span>
@@ -214,32 +214,32 @@ public class Player extends GameObject {
         }
 <span class="fc" id="L215">        currentTime = TimeUtils.millis();</span>
         //If it has been 10 seconds since the player was last hit, then health will increase.
-<span class="pc bpc" id="L217" title="1 of 2 branches missed.">        if (currentTime - timeLastHit &gt; timeBeforeRegen){</span>
-<span class="nc" id="L218">            currentHealth += regenAmount;</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">        if (currentTime - timeLastHit &gt; timeBeforeRegen){</span>
+<span class="fc" id="L218">            currentHealth += regenAmount;</span>
             //If current health goes above the max, then it will remain at max health.
-<span class="nc bnc" id="L220" title="All 2 branches missed.">            if(currentHealth &gt; maxHealth) currentHealth = maxHealth;</span>
-<span class="nc" id="L221">            playerHealth.resize(currentHealth);</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">            if(currentHealth &gt; maxHealth) currentHealth = maxHealth;</span>
+<span class="fc" id="L221">            playerHealth.resize(currentHealth);</span>
         }
 
         //Timing how long the GiveMoreDamage powerup lasts
-<span class="pc bpc" id="L225" title="1 of 2 branches missed.">        if(currentTime - damageIncreaseStart &gt; DAMAGE_POWERUP_TOTAL_LENGTH){</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">        if(currentTime - damageIncreaseStart &gt; DAMAGE_POWERUP_TOTAL_LENGTH){</span>
 <span class="fc" id="L226">            playerDamage = defaultDamage;</span>
         }
 
         //Timing how long the Immunity powerup lasts
-<span class="pc bpc" id="L230" title="1 of 2 branches missed.">        if (currentTime - immunityStart &gt; IMMUNITY_POWERUP_LENGTH){</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">        if (currentTime - immunityStart &gt; IMMUNITY_POWERUP_LENGTH){</span>
 <span class="fc" id="L231">            setImmune(false);</span>
         }
 
         ////Timing how long the TakeMoreDamage powerup lasts
 
-<span class="pc bpc" id="L236" title="1 of 2 branches missed.">        if (TimeUtils.timeSinceMillis(takeMoreDamageStart) &gt; DAMAGE_POWERUP_TOTAL_LENGTH){</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">        if (TimeUtils.timeSinceMillis(takeMoreDamageStart) &gt; DAMAGE_POWERUP_TOTAL_LENGTH){</span>
 <span class="fc" id="L237">            setMaxHealth(nonBoostedMaxHealth);</span>
-<span class="pc bpc" id="L238" title="1 of 2 branches missed.">            if(currentHealth &gt; maxHealth) currentHealth = maxHealth;</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">            if(currentHealth &gt; maxHealth) currentHealth = maxHealth;</span>
         }
 
         //Timing how long the Speed powerup lasts
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">        if (currentTime - speedStart &gt; SPEED_POWERUP_TOTAL_LENGTH){</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">        if (currentTime - speedStart &gt; SPEED_POWERUP_TOTAL_LENGTH){</span>
 <span class="fc" id="L243">            speedMultiplier = 1;</span>
         }
 <span class="fc" id="L245">    }</span>
@@ -304,9 +304,9 @@ public class Player extends GameObject {
      * Damage increases for a set amount of real world time.
      */
     public void damageIncrease(){
-<span class="nc" id="L307">        this.playerDamage = DAMAGE_POWERUP_VALUE;</span>
-<span class="nc" id="L308">        this.damageIncreaseStart = TimeUtils.millis();</span>
-<span class="nc" id="L309">    }</span>
+<span class="fc" id="L307">        this.playerDamage = DAMAGE_POWERUP_VALUE;</span>
+<span class="fc" id="L308">        this.damageIncreaseStart = TimeUtils.millis();</span>
+<span class="fc" id="L309">    }</span>
 
     /**
      * Give the player max health.
@@ -320,15 +320,15 @@ public class Player extends GameObject {
      * Gives the player immunity, projectiles no longer do damage for a set amount of time.
      */
     public void immunityPowerup(){
-<span class="nc" id="L323">        this.immunityStart = TimeUtils.millis();</span>
-<span class="nc" id="L324">        setImmune(true);</span>
-<span class="nc" id="L325">    }</span>
+<span class="fc" id="L323">        this.immunityStart = TimeUtils.millis();</span>
+<span class="fc" id="L324">        setImmune(true);</span>
+<span class="fc" id="L325">    }</span>
 
     /**
      * Getter for the immune value.
      * @return whether the player is immune from damage.
      */
-<span class="nc" id="L331">    public boolean getImmune(){return immune;}</span>
+<span class="fc" id="L331">    public boolean getImmune(){return immune;}</span>
 
     /**
      * Setter for the immune value.
@@ -341,24 +341,24 @@ public class Player extends GameObject {
      * player is also given max health.
      */
     public void takeMoreDamagePowerup(){
-<span class="nc" id="L344">        this.takeMoreDamageStart = TimeUtils.millis();</span>
-<span class="nc" id="L345">        setMaxHealth(TAKE_DAMAGE_INCREASE);</span>
-<span class="nc" id="L346">        setCurrentHealth(getMaxHealth());</span>
-<span class="nc" id="L347">    }</span>
+<span class="fc" id="L344">        this.takeMoreDamageStart = TimeUtils.millis();</span>
+<span class="fc" id="L345">        setMaxHealth(TAKE_DAMAGE_INCREASE);</span>
+<span class="fc" id="L346">        setCurrentHealth(getMaxHealth());</span>
+<span class="fc" id="L347">    }</span>
 
     /**
      * The player can travel 2 times faster temporarily.
      */
     public void speedPowerup(){
-<span class="nc" id="L353">        this.speedStart = TimeUtils.millis();</span>
-<span class="nc" id="L354">        speedMultiplier = 2;</span>
-<span class="nc" id="L355">    }</span>
+<span class="fc" id="L353">        this.speedStart = TimeUtils.millis();</span>
+<span class="fc" id="L354">        speedMultiplier = 2;</span>
+<span class="fc" id="L355">    }</span>
 
     /**
      * Getter for the speed multiplier
      * @return the magnitude of the speed increase of the player when the speed powerup is active.
      */
-<span class="nc" id="L361">    public int getSpeedMultiplier(){return speedMultiplier;}</span>
+<span class="fc" id="L361">    public int getSpeedMultiplier(){return speedMultiplier;}</span>
 
     /**
      * Setter for maximum health, when {@link #takeMoreDamagePowerup()} isn't active.
@@ -370,7 +370,7 @@ public class Player extends GameObject {
      * Getter for nonBoostedMaxHealth
      * @return  Get the value of maximum health without power ups.
      */
-<span class="nc" id="L373">    public int getNonBoostedMaxHealth(){return nonBoostedMaxHealth;}</span>
+<span class="fc" id="L373">    public int getNonBoostedMaxHealth(){return nonBoostedMaxHealth;}</span>
 
     //Difficulty Methods
     /**
