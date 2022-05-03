@@ -100,7 +100,7 @@ public class Enemy extends GameObject {
         //Shoot the player is they are close
 <span class="nc bnc" id="L101" title="All 2 branches missed.">        if (nearPlayer){</span>
 <span class="nc bnc" id="L102" title="All 2 branches missed.">            if (!Objects.equals(team, GameScreen.playerTeam)){</span>
-<span class="nc" id="L103">                int shootFrequency = 200;</span>
+<span class="nc" id="L103">                int shootFrequency = 400;</span>
 <span class="nc bnc" id="L104" title="All 2 branches missed.">                if (TimeUtils.timeSinceMillis(lastShotFired) &gt; shootFrequency){</span>
 <span class="nc" id="L105">                    lastShotFired = TimeUtils.millis();</span>
 <span class="nc" id="L106">                    Projectile newProjectile = new Projectile(this, playerX, playerY, team);</span>
