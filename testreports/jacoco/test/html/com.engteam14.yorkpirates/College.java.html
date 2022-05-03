@@ -184,48 +184,53 @@ public class College extends GameObject {
         }
 <span class="nc" id="L185">    }</span>
 
+    /**
+     * Called when the college is captured
+     * @param screen        The main game screen
+     * @throws Exception    Inherited from changeImage
+     */
     public void capturedUpdate (GameScreen screen) throws Exception{
         // Change the health bar to green, change the indicator arrow to green.
-<span class="nc" id="L189">        Array&lt;Texture&gt; healthBarSprite = new Array&lt;&gt;();</span>
-<span class="nc" id="L190">        Array&lt;Texture&gt; indicatorSprite = new Array&lt;&gt;();</span>
-<span class="nc" id="L191">        healthBarSprite.add(new Texture(&quot;allyHealthBar.png&quot;));</span>
-<span class="nc" id="L192">        indicatorSprite.add(new Texture(&quot;allyArrow.png&quot;));</span>
-<span class="nc" id="L193">        boatTexture.clear();</span>
-<span class="nc" id="L194">        boatTexture.add(screen.getPlayer().anim.getKeyFrame(0f));</span>
+<span class="nc" id="L194">        Array&lt;Texture&gt; healthBarSprite = new Array&lt;&gt;();</span>
+<span class="nc" id="L195">        Array&lt;Texture&gt; indicatorSprite = new Array&lt;&gt;();</span>
+<span class="nc" id="L196">        healthBarSprite.add(new Texture(&quot;allyHealthBar.png&quot;));</span>
+<span class="nc" id="L197">        indicatorSprite.add(new Texture(&quot;allyArrow.png&quot;));</span>
+<span class="nc" id="L198">        boatTexture.clear();</span>
+<span class="nc" id="L199">        boatTexture.add(screen.getPlayer().anim.getKeyFrame(0f));</span>
 
-<span class="nc" id="L196">        Array&lt;Texture&gt; sprites = new Array&lt;&gt;();</span>
-<span class="nc" id="L197">        sprites.add(collegeImages.get(1));</span>
-<span class="nc" id="L198">        changeImage(sprites,0);</span>
+<span class="nc" id="L201">        Array&lt;Texture&gt; sprites = new Array&lt;&gt;();</span>
+<span class="nc" id="L202">        sprites.add(collegeImages.get(1));</span>
+<span class="nc" id="L203">        changeImage(sprites,0);</span>
 
-<span class="nc" id="L200">        collegeBar.changeImage(healthBarSprite,0);</span>
-<span class="nc" id="L201">        currentHealth = maxHealth;</span>
-<span class="nc" id="L202">        collegeBar.resize(currentHealth);</span>
-<span class="nc" id="L203">        direction.changeImage(indicatorSprite,0);</span>
-<span class="nc" id="L204">    }</span>
+<span class="nc" id="L205">        collegeBar.changeImage(healthBarSprite,0);</span>
+<span class="nc" id="L206">        currentHealth = maxHealth;</span>
+<span class="nc" id="L207">        collegeBar.resize(currentHealth);</span>
+<span class="nc" id="L208">        direction.changeImage(indicatorSprite,0);</span>
+<span class="nc" id="L209">    }</span>
 
     /**
      * Called when a projectile hits the college.
      * @param damage    The damage dealt by the projectile.
      */
     public void takeDamage(float damage){
-<span class="fc" id="L211">        super.takeDamage(damage);</span>
+<span class="fc" id="L216">        super.takeDamage(damage);</span>
         // Add red tint when hit.
-<span class="fc" id="L213">        doBloodSplash = true;</span>
-<span class="fc" id="L214">    }</span>
+<span class="fc" id="L218">        doBloodSplash = true;</span>
+<span class="fc" id="L219">    }</span>
 
     /**
      * Getter for doBloodSplash
      * @return  whether the college should have a red tint from getting hit.
      */
-<span class="fc" id="L220">    public boolean getDoBloodSplash(){return doBloodSplash;}</span>
+<span class="fc" id="L225">    public boolean getDoBloodSplash(){return doBloodSplash;}</span>
 
     /**
      * Called when the college needs to be destroyed.
      * @param screen    The main game screen.
      */
     private void destroy(GameScreen screen){
-<span class="nc" id="L227">        screen.colleges.removeValue(this,true);</span>
-<span class="nc" id="L228">    }</span>
+<span class="nc" id="L232">        screen.colleges.removeValue(this,true);</span>
+<span class="nc" id="L233">    }</span>
 
     /**
      * Called when drawing the object.
@@ -234,25 +239,25 @@ public class College extends GameObject {
      */
     @Override
     public void draw(SpriteBatch batch, float elapsedTime){
-<span class="nc bnc" id="L237" title="All 2 branches missed.">        if (shader == null){generateShader();}</span>
-<span class="nc bnc" id="L238" title="All 2 branches missed.">        if(doBloodSplash)   batch.setShader(shader); // Set red shader to the batch</span>
-<span class="nc" id="L239">        else                batch.setShader(null);</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">        if (shader == null){generateShader();}</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">        if(doBloodSplash)   batch.setShader(shader); // Set red shader to the batch</span>
+<span class="nc" id="L244">        else                batch.setShader(null);</span>
 
         // Draw college
-<span class="nc" id="L242">        batch.draw(anim.getKeyFrame(elapsedTime, true), x - width/2, y - height/2, width, height);</span>
+<span class="nc" id="L247">        batch.draw(anim.getKeyFrame(elapsedTime, true), x - width/2, y - height/2, width, height);</span>
 
         // Draw boats after college, so under
-<span class="nc" id="L245">        batch.setShader(null);</span>
-<span class="nc bnc" id="L246" title="All 2 branches missed.">        for(int i = 0; i &lt; boats.size; i++){</span>
-<span class="nc" id="L247">            GameObject boat = boats.get(i);</span>
-<span class="nc" id="L248">            batch.draw(boatTexture.get(0), boat.x+boat.height, boat.y, 0,0, boat.width, boat.height,</span>
-<span class="nc" id="L249">                    1f, 1f, boatRotations.get(i), 0, 0,</span>
-<span class="nc" id="L250">                    boatTexture.get(0).getWidth(), boatTexture.get(0).getHeight(), false, false);</span>
+<span class="nc" id="L250">        batch.setShader(null);</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">        for(int i = 0; i &lt; boats.size; i++){</span>
+<span class="nc" id="L252">            GameObject boat = boats.get(i);</span>
+<span class="nc" id="L253">            batch.draw(boatTexture.get(0), boat.x+boat.height, boat.y, 0,0, boat.width, boat.height,</span>
+<span class="nc" id="L254">                    1f, 1f, boatRotations.get(i), 0, 0,</span>
+<span class="nc" id="L255">                    boatTexture.get(0).getWidth(), boatTexture.get(0).getHeight(), false, false);</span>
         }
 
-<span class="nc" id="L253">        collegeBar.draw(batch, 0);</span>
-<span class="nc" id="L254">        direction.draw(batch,0);</span>
-<span class="nc" id="L255">    }</span>
+<span class="nc" id="L258">        collegeBar.draw(batch, 0);</span>
+<span class="nc" id="L259">        direction.draw(batch,0);</span>
+<span class="nc" id="L260">    }</span>
 
     /**
      * Add a boat to this college.
@@ -260,14 +265,14 @@ public class College extends GameObject {
      * @param y The y position of the new boat relative to the college.
      */
     public void addBoat(float x, float y, float rotation){
-<span class="nc" id="L263">        GameObject newBoat = new GameObject(this.x+x, this.y+y, 25, 12, team);</span>
-<span class="nc" id="L264">        boats.add(newBoat);</span>
+<span class="nc" id="L268">        GameObject newBoat = new GameObject(this.x+x, this.y+y, 25, 12, team);</span>
+<span class="nc" id="L269">        boats.add(newBoat);</span>
         //boats.add(new GameObject(boatTexture, 0, this.x+x, this.y+y, 25, 12, team));
-<span class="nc" id="L266">        boatRotations.add(rotation);</span>
-<span class="nc" id="L267">    }</span>
+<span class="nc" id="L271">        boatRotations.add(rotation);</span>
+<span class="nc" id="L272">    }</span>
     // Get college name
     public String getCollegeName() {
-<span class="nc" id="L270">        return collegeName;</span>
+<span class="nc" id="L275">        return collegeName;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

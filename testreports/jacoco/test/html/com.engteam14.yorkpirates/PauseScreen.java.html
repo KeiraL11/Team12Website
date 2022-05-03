@@ -184,23 +184,25 @@ public class PauseScreen extends ScreenAdapter {
     private void gameSave() {
 <span class="nc" id="L185">        screen.setPaused(true);</span>
 
-<span class="nc" id="L187">        game.prefs.putString(&quot;PlayerName&quot;, screen.getPlayerName());</span>
-<span class="nc" id="L188">        game.prefs.putFloat(&quot;PlayerHealth&quot;, screen.getPlayer().currentHealth);</span>
-<span class="nc" id="L189">        game.prefs.putFloat(&quot;Playerx&quot;, screen.getPlayer().x);</span>
-<span class="nc" id="L190">        game.prefs.putFloat(&quot;Playery&quot;, screen.getPlayer().y);</span>
-<span class="nc" id="L191">        game.prefs.putInteger(&quot;PlayerLoot&quot;, screen.loot.Get());</span>
-<span class="nc" id="L192">        game.prefs.putInteger(&quot;PlayerPoints&quot;, screen.points.Get());</span>
-<span class="nc" id="L193">        game.prefs.putFloat(&quot;PlayerDistance&quot;, screen.getPlayer().getDistance());</span>
-<span class="nc" id="L194">        game.prefs.putInteger(&quot;capturedCount&quot;, College.capturedCount);</span>
-<span class="nc" id="L195">        game.prefs.putString(&quot;Difficulty&quot;, screen.getPlayer().getDifficulty());</span>
+        // Save key info
+<span class="nc" id="L188">        game.prefs.putString(&quot;PlayerName&quot;, screen.getPlayerName());</span>
+<span class="nc" id="L189">        game.prefs.putFloat(&quot;PlayerHealth&quot;, screen.getPlayer().currentHealth);</span>
+<span class="nc" id="L190">        game.prefs.putFloat(&quot;Playerx&quot;, screen.getPlayer().x);</span>
+<span class="nc" id="L191">        game.prefs.putFloat(&quot;Playery&quot;, screen.getPlayer().y);</span>
+<span class="nc" id="L192">        game.prefs.putInteger(&quot;PlayerLoot&quot;, screen.loot.Get());</span>
+<span class="nc" id="L193">        game.prefs.putInteger(&quot;PlayerPoints&quot;, screen.points.Get());</span>
+<span class="nc" id="L194">        game.prefs.putFloat(&quot;PlayerDistance&quot;, screen.getPlayer().getDistance());</span>
+<span class="nc" id="L195">        game.prefs.putInteger(&quot;capturedCount&quot;, College.capturedCount);</span>
+<span class="nc" id="L196">        game.prefs.putString(&quot;Difficulty&quot;, screen.getPlayer().getDifficulty());</span>
 
-<span class="nc bnc" id="L197" title="All 2 branches missed.">        for (int i = 0; i &lt; screen.colleges.size; i++) {</span>
-<span class="nc" id="L198">            game.prefs.putFloat(screen.colleges.get(i).getCollegeName() + &quot;Health&quot;, screen.colleges.get(i).currentHealth);</span>
-<span class="nc" id="L199">            game.prefs.putString(screen.colleges.get(i).getCollegeName() + &quot;Team&quot;, screen.colleges.get(i).team);</span>
-<span class="nc" id="L200">            game.prefs.putBoolean(screen.colleges.get(i).getCollegeName() + &quot;Captured&quot;, screen.colleges.get(i).captured);</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">        for (int i = 0; i &lt; screen.colleges.size; i++) {</span>
+<span class="nc" id="L199">            game.prefs.putFloat(screen.colleges.get(i).getCollegeName() + &quot;Health&quot;, screen.colleges.get(i).currentHealth);</span>
+<span class="nc" id="L200">            game.prefs.putString(screen.colleges.get(i).getCollegeName() + &quot;Team&quot;, screen.colleges.get(i).team);</span>
+<span class="nc" id="L201">            game.prefs.putBoolean(screen.colleges.get(i).getCollegeName() + &quot;Captured&quot;, screen.colleges.get(i).captured);</span>
         }
 
-<span class="nc" id="L203">        game.prefs.flush();</span>
-<span class="nc" id="L204">    }</span>
+        // Write info to memory
+<span class="nc" id="L205">        game.prefs.flush();</span>
+<span class="nc" id="L206">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
