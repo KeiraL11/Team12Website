@@ -121,5 +121,5 @@ The software [Tiled](https://www.mapeditor.org) can be used to produce levels, w
 <br/><br/>![Tiled](/media/tiled.gif)
 <br/><br/>Maps from Tiled can be easily imported into LibGDX, and we've even implemented our own collision system around it - ready out of the box!
 
-## Now's the best time to go Bass<sup>2</sup>!
-[Check out](https://github.com/engteam14/yorkpirates) our repository on GitHub!
+## Now's the best time to go Team 12!
+[Check out](https://github.com/KeiraL11/yorkpirates-Team12) our repository on GitHub!
