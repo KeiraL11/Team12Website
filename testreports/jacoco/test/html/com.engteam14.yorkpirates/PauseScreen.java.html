@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PauseScreen.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.engteam14.yorkpirates</a> &gt; <span class="el_source">PauseScreen.java</span></div><h1>PauseScreen.java</h1><pre class="source lang-java linenums">package com.engteam14.yorkpirates;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.Preferences;
+
+
+public class PauseScreen extends ScreenAdapter {
+
+    private final YorkPirates game;
+    private final GameScreen screen;
+
+    private final ShopScreen shopScreen;
+    private final Stage pauseStage;
+
+    /**
+     * Called when the game needs to be paused.
+     * Contains the shop and saving.
+     * @param game      The base game, stores some important values.
+     * @param screen    the main game.
+     */
+<span class="nc" id="L32">    public PauseScreen(YorkPirates game, GameScreen screen){</span>
+<span class="nc" id="L33">        this.game = game;</span>
+<span class="nc" id="L34">        this.screen = screen;</span>
+
+<span class="nc" id="L36">        shopScreen = new ShopScreen(game, screen,this);</span>
+
+        // Generate skin
+        TextureAtlas atlas;
+<span class="nc" id="L40">        atlas = new TextureAtlas(Gdx.files.internal(&quot;Skin/YorkPiratesSkin.atlas&quot;));</span>
+<span class="nc" id="L41">        Skin skin = new Skin(Gdx.files.internal(&quot;Skin/YorkPiratesSkin.json&quot;), new TextureAtlas(Gdx.files.internal(&quot;Skin/YorkPiratesSkin.atlas&quot;)));</span>
+<span class="nc" id="L42">        skin.addRegions(atlas);</span>
+
+        // Generate stage and table
+<span class="nc" id="L45">        pauseStage = new Stage(screen.getViewport());</span>
+<span class="nc" id="L46">        Gdx.input.setInputProcessor(pauseStage);</span>
+<span class="nc" id="L47">        Table table = new Table();</span>
+<span class="nc" id="L48">        table.setFillParent(true);</span>
+<span class="nc" id="L49">        table.setTouchable(Touchable.enabled);</span>
+<span class="nc" id="L50">        table.setBackground(skin.getDrawable(&quot;Selection&quot;));</span>
+        if(YorkPirates.DEBUG_ON) table.setDebug(true);
+
+        // Generate title texture
+<span class="nc" id="L54">        Texture titleT = new Texture(Gdx.files.internal(&quot;paused.png&quot;));</span>
+<span class="nc" id="L55">        Image title = new Image(titleT);</span>
+<span class="nc" id="L56">        title.setScaling(Scaling.fit);</span>
+
+        // Generate buttons
+<span class="nc" id="L59">        TextButton shop = new TextButton(&quot;Shop&quot;, skin);</span>
+<span class="nc" id="L60">        shop.addListener(new ClickListener() {</span>
+            public void clicked(InputEvent event, float x, float y) {
+<span class="nc" id="L62">                game.setScreen(shopScreen);</span>
+<span class="nc" id="L63">            }</span>
+        });
+
+        // Left click will resume the game
+<span class="nc" id="L67">        TextButton resume = new TextButton(&quot;Resume&quot;, skin);</span>
+<span class="nc" id="L68">        resume.addListener(new ClickListener() {</span>
+            public void clicked(InputEvent event, float x, float y) {
+<span class="nc" id="L70">                gameContinue();</span>
+<span class="nc" id="L71">            }</span>
+        });
+
+        // Left click will save &amp; quit the game
+<span class="nc" id="L75">        TextButton save = new TextButton(&quot;Save &amp; Quit&quot;, skin);</span>
+<span class="nc" id="L76">        save.addListener(new ClickListener() {</span>
+            public void clicked(InputEvent event, float x, float y) {
+<span class="nc" id="L78">                gameSave();</span>
+<span class="nc" id="L79">                Gdx.app.exit();</span>
+<span class="nc" id="L80">            }</span>
+        });
+
+        // Left click will restart the game
+<span class="nc" id="L84">        TextButton restart = new TextButton(&quot;End Game&quot;, skin);</span>
+<span class="nc" id="L85">        restart.addListener(new ClickListener() {</span>
+            public void clicked(InputEvent event, float x, float y) {
+<span class="nc" id="L87">                screen.gameEnd(false);</span>
+
+<span class="nc" id="L89">            }</span>
+        });
+
+        // Music
+<span class="nc" id="L93">        TextButton music = new TextButton(&quot;&quot;, skin);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if (screen.music.getVolume() == 0)  music.setText(&quot;Turn Music ON&quot;);</span>
+<span class="nc" id="L95">        else                                music.setText(&quot;Turn Music OFF&quot;);</span>
+<span class="nc" id="L96">        music.addListener(new ClickListener() {</span>
+            public void clicked(InputEvent event, float x, float y) {
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                if (screen.music.getVolume() == 0) {</span>
+<span class="nc" id="L99">                    screen.music.setVolume(1);</span>
+<span class="nc" id="L100">                    music.setText(&quot;Turn Music OFF&quot;);</span>
+                } else {
+<span class="nc" id="L102">                    screen.music.setVolume(0);</span>
+<span class="nc" id="L103">                    music.setText(&quot;Turn Music ON&quot;);</span>
+
+                }
+<span class="nc" id="L106">            }</span>
+        });
+
+        // Quit
+<span class="nc" id="L110">        TextButton quit = new TextButton(&quot;Quit&quot;, skin);</span>
+<span class="nc" id="L111">        quit.addListener(new ClickListener() {</span>
+            public void clicked(InputEvent event, float x, float y) {
+<span class="nc" id="L113">                Gdx.app.exit();</span>
+
+<span class="nc" id="L115">            }</span>
+        });
+
+        // Add title to table
+<span class="nc" id="L119">        table.row();</span>
+<span class="nc" id="L120">        table.add(title).expand();</span>
+
+        // Add buttons to table
+<span class="nc" id="L123">        table.row();</span>
+<span class="nc" id="L124">        table.add(shop).expand();</span>
+<span class="nc" id="L125">        table.row();</span>
+<span class="nc" id="L126">        table.add(resume).expand();</span>
+<span class="nc" id="L127">        table.row();</span>
+<span class="nc" id="L128">        table.add(save).expand();</span>
+<span class="nc" id="L129">        table.row();</span>
+<span class="nc" id="L130">        table.add(restart).expand();</span>
+<span class="nc" id="L131">        table.row();</span>
+<span class="nc" id="L132">        table.add(music).expand();</span>
+<span class="nc" id="L133">        table.row();</span>
+<span class="nc" id="L134">        table.add(quit).expand();</span>
+
+        // Add table to the stage
+<span class="nc" id="L137">        pauseStage.addActor(table);</span>
+<span class="nc" id="L138">    }</span>
+
+    /**
+     * Is called once every frame. Runs update() and then renders the title screen.
+     * @param delta The time passed since the previously rendered frame.
+     */
+    @Override
+    public void render(float delta){
+<span class="nc" id="L146">        Gdx.input.setInputProcessor(pauseStage);</span>
+<span class="nc" id="L147">        update();</span>
+<span class="nc" id="L148">        ScreenUtils.clear(0.6f, 0.6f, 1.0f, 1.0f);</span>
+<span class="nc" id="L149">        screen.render(delta); // Draws the gameplay screen as a background</span>
+<span class="nc" id="L150">        pauseStage.draw(); // Draws the stage</span>
+<span class="nc" id="L151">    }</span>
+
+    /**
+     * Is called once every frame. Used for calculations that take place before rendering.
+     */
+    private void update(){
+<span class="nc bnc" id="L157" title="All 6 branches missed.">        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){</span>
+<span class="nc" id="L158">            gameContinue();</span>
+        }
+<span class="nc" id="L160">    }</span>
+
+    /**
+     * Generates a HUD object within the game that controls elements of the UI.
+     */
+    private void gameContinue() {
+<span class="nc bnc" id="L166" title="All 2 branches missed.">        if (shopScreen.immunity_bought) {</span>
+<span class="nc" id="L167">            screen.getPlayer().immunityPowerup();</span>
+        }
+
+<span class="nc bnc" id="L170" title="All 2 branches missed.">        if (shopScreen.give_more_damage_bought) {</span>
+<span class="nc" id="L171">            screen.getPlayer().damageIncrease();</span>
+        }
+
+<span class="nc bnc" id="L174" title="All 2 branches missed.">        if (shopScreen.take_more_damage_bought) {</span>
+<span class="nc" id="L175">            screen.getPlayer().takeMoreDamagePowerup();</span>
+        }
+<span class="nc" id="L177">        screen.setPaused(false);</span>
+<span class="nc" id="L178">        game.setScreen(screen);</span>
+<span class="nc" id="L179">    }</span>
+
+    /**
+     * Save the game with current status
+     */
+    private void gameSave() {
+<span class="nc" id="L185">        screen.setPaused(true);</span>
+
+        // Save key info
+<span class="nc" id="L188">        game.prefs.putString(&quot;PlayerName&quot;, screen.getPlayerName());</span>
+<span class="nc" id="L189">        game.prefs.putFloat(&quot;PlayerHealth&quot;, screen.getPlayer().currentHealth);</span>
+<span class="nc" id="L190">        game.prefs.putFloat(&quot;Playerx&quot;, screen.getPlayer().x);</span>
+<span class="nc" id="L191">        game.prefs.putFloat(&quot;Playery&quot;, screen.getPlayer().y);</span>
+<span class="nc" id="L192">        game.prefs.putInteger(&quot;PlayerLoot&quot;, screen.loot.Get());</span>
+<span class="nc" id="L193">        game.prefs.putInteger(&quot;PlayerPoints&quot;, screen.points.Get());</span>
+<span class="nc" id="L194">        game.prefs.putFloat(&quot;PlayerDistance&quot;, screen.getPlayer().getDistance());</span>
+<span class="nc" id="L195">        game.prefs.putInteger(&quot;capturedCount&quot;, College.capturedCount);</span>
+<span class="nc" id="L196">        game.prefs.putString(&quot;Difficulty&quot;, screen.getPlayer().getDifficulty());</span>
+
+<span class="nc bnc" id="L198" title="All 2 branches missed.">        for (int i = 0; i &lt; screen.colleges.size; i++) {</span>
+<span class="nc" id="L199">            game.prefs.putFloat(screen.colleges.get(i).getCollegeName() + &quot;Health&quot;, screen.colleges.get(i).currentHealth);</span>
+<span class="nc" id="L200">            game.prefs.putString(screen.colleges.get(i).getCollegeName() + &quot;Team&quot;, screen.colleges.get(i).team);</span>
+<span class="nc" id="L201">            game.prefs.putBoolean(screen.colleges.get(i).getCollegeName() + &quot;Captured&quot;, screen.colleges.get(i).captured);</span>
+        }
+
+        // Write info to memory
+<span class="nc" id="L205">        game.prefs.flush();</span>
+<span class="nc" id="L206">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

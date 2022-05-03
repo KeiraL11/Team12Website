@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>College.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.engteam14.yorkpirates</a> &gt; <span class="el_source">College.java</span></div><h1>College.java</h1><pre class="source lang-java linenums">package com.engteam14.yorkpirates;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
+
+import java.util.Objects;
+
+import static java.lang.Math.abs;
+
+public class College extends GameObject {
+
+<span class="fc" id="L16">    public static int capturedCount = 0;</span>
+
+<span class="fc" id="L18">    public boolean captured = false;</span>
+<span class="fc" id="L19">    private boolean captureUpdated = false;</span>
+
+    private HealthBar collegeBar;
+    private Indicator direction;
+
+    private float splashTime;
+    private long lastShotFired;
+    private final String collegeName;
+<span class="fc" id="L27">    private final Array&lt;Texture&gt; collegeImages = new Array&lt;&gt;();</span>
+<span class="fc" id="L28">    private final Array&lt;Texture&gt; boatTexture = new Array&lt;&gt;();</span>
+<span class="fc" id="L29">    private final Array&lt;GameObject&gt; boats = new Array&lt;&gt;();</span>
+<span class="fc" id="L30">    private final Array&lt;Float&gt; boatRotations = new Array&lt;&gt;();</span>
+
+<span class="fc" id="L32">    private boolean doBloodSplash = false;</span>
+
+    /**
+     * Generates a college object within the game with animated frame(s) and a hit-box.
+     * @param x         The x coordinate within the map to initialise the object at.
+     * @param y         The y coordinate within the map to initialise the object at.
+     * @param width     The width of the object.
+     * @param height    The height of the object.
+     * @param name      The name of the college.
+     * @param team      The team the college is on.
+     */
+    public College(float x, float y, float width, float height, String name, String team){
+<span class="fc" id="L44">        super(x, y, width, height, team);</span>
+<span class="fc" id="L45">        splashTime = 0;</span>
+<span class="fc" id="L46">        setMaxHealth(2000);</span>
+<span class="fc" id="L47">        setCurrentHealth(getMaxHealth());</span>
+<span class="fc" id="L48">        lastShotFired = 0;</span>
+<span class="fc" id="L49">        collegeName = name;</span>
+<span class="fc" id="L50">    }</span>
+
+    /**
+     * Adds the images to the college, allows for headless testing.
+     * Needs images for the indicator arrows, health bar, surround boats and the college image.
+     * @param sprites       Array of textures that the college uses
+     * @param boatTexture   File path of the boats that the college uses.
+     * @param player        Add the player, so that the indicator arrows can point correctly.
+     * @throws Exception    inherited from changeImage()
+     */
+    public void imageHandling(Array&lt;Texture&gt; sprites, String boatTexture, Player player) throws Exception {
+<span class="nc" id="L61">        super.changeImage(sprites, 0);</span>
+<span class="nc" id="L62">        this.boatTexture.add(new Texture(Gdx.files.internal(boatTexture)));</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        for (int i = 0; i &lt; sprites.size; i++){</span>
+<span class="nc" id="L64">            collegeImages.add(sprites.get(i));</span>
+        }
+<span class="nc" id="L66">        Array&lt;Texture&gt; healthBarSprite = new Array&lt;&gt;();</span>
+<span class="nc" id="L67">        Array&lt;Texture&gt; indicatorSprite = new Array&lt;&gt;();</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if(Objects.equals(team, GameScreen.playerTeam)){</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">            if(Objects.equals(collegeName, &quot;Home&quot;)){</span>
+<span class="nc" id="L70">                indicatorSprite.add(new Texture(&quot;homeArrow.png&quot;));</span>
+            }else{
+<span class="nc" id="L72">                indicatorSprite.add(new Texture(&quot;allyArrow.png&quot;));</span>
+            }
+<span class="nc" id="L74">            healthBarSprite.add(new Texture(&quot;allyHealthBar.png&quot;));</span>
+
+        }else{
+<span class="nc" id="L77">            healthBarSprite.add(new Texture(&quot;enemyHealthBar.png&quot;));</span>
+<span class="nc" id="L78">            indicatorSprite.add(new Texture(&quot;questArrow.png&quot;));</span>
+        }
+<span class="nc" id="L80">        createHealthBar();</span>
+<span class="nc" id="L81">        collegeBar.changeImage(healthBarSprite);</span>
+<span class="nc" id="L82">        createIndicator(player, indicatorSprite.get(0).getWidth()/50f,</span>
+<span class="nc" id="L83">                indicatorSprite.get(0).getHeight()/50f);</span>
+<span class="nc" id="L84">        direction.changeImage(indicatorSprite);</span>
+<span class="nc" id="L85">    }</span>
+
+    /**
+     * Creates the health bar for the college
+     */
+<span class="fc" id="L90">    public void createHealthBar(){collegeBar = new HealthBar(this);}</span>
+
+    /**
+     * Getter for the health bar
+     * @return  health bar of the college.
+     */
+<span class="fc" id="L96">    public HealthBar getCollegeBar(){return collegeBar;}</span>
+
+    /**
+     * Creates an arrow pointing to the college
+     * @param player    The player.
+     * @param width     width of the arrow.
+     * @param height    height of the arrow.
+     */
+    public void createIndicator(Player player, float width, float height){
+<span class="nc" id="L105">        direction  = new Indicator(this,player, width, height);</span>
+<span class="nc" id="L106">    }</span>
+
+    /**
+     * Getter for direction
+     * @return arrow which points to the college
+     */
+<span class="nc" id="L112">    public Indicator getDirection(){return direction;}</span>
+    /**
+     * Called once per frame. Used to perform calculations such as collision.
+     * @param screen        The main game screen.
+     * @throws Exception    Inherited from change image
+     */
+    public void update(GameScreen screen) throws Exception {
+<span class="nc" id="L119">        direction.move();</span>
+<span class="nc" id="L120">        float playerX = screen.getPlayer().x;</span>
+<span class="nc" id="L121">        float playerY = screen.getPlayer().y;</span>
+<span class="nc bnc" id="L122" title="All 4 branches missed.">        boolean nearPlayer = abs(this.x - playerX) &lt; (Gdx.graphics.getWidth()/15f) &amp;&amp; abs(this.y - playerY) &lt; (Gdx.graphics.getHeight()/10f);</span>
+
+<span class="nc bnc" id="L124" title="All 4 branches missed.">        if (captured &amp;&amp; !captureUpdated) {</span>
+<span class="nc" id="L125">            capturedUpdate(screen);</span>
+        }
+
+<span class="nc bnc" id="L128" title="All 4 branches missed.">        if(nearPlayer || screen.isPaused()){</span>
+<span class="nc" id="L129">            direction.setVisible(false);</span>
+
+<span class="nc bnc" id="L131" title="All 2 branches missed.">            if(!Objects.equals(team, GameScreen.playerTeam)) { // Checks if the college is an enemy of the player</span>
+                // How often the college can shoot.
+<span class="nc" id="L133">                int shootFrequency = 1000;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">                if (TimeUtils.timeSinceMillis(lastShotFired) &gt; shootFrequency){</span>
+<span class="nc" id="L135">                    lastShotFired = TimeUtils.millis();</span>
+<span class="nc" id="L136">                    Array&lt;Texture&gt; sprites = new Array&lt;&gt;();</span>
+<span class="nc" id="L137">                    sprites.add(new Texture(&quot;tempProjectile.png&quot;));</span>
+<span class="nc" id="L138">                    Projectile newProjectile = new Projectile(this, playerX, playerY, team);</span>
+<span class="nc" id="L139">                    newProjectile.changeImage(sprites);</span>
+<span class="nc" id="L140">                    screen.projectiles.add(newProjectile);</span>
+                }
+<span class="nc bnc" id="L142" title="All 2 branches missed.">            }else if(Objects.equals(collegeName, &quot;Home&quot;)){</span>
+<span class="nc" id="L143">                boolean victory = true;</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">                for(int i = 0; i &lt; screen.colleges.size; i++) {</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">                    if(!Objects.equals(screen.colleges.get(i).team, GameScreen.playerTeam)){</span>
+<span class="nc" id="L146">                        victory = false;</span>
+                    }
+                }
+<span class="nc bnc" id="L149" title="All 2 branches missed.">                if(victory){</span>
+<span class="nc" id="L150">                    screen.getHUD().setGameEndable();</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">                    if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) screen.gameEnd(true);</span>
+                }
+<span class="nc" id="L153">            }</span>
+        }else{
+<span class="nc" id="L155">            direction.setVisible(true);</span>
+        }
+
+<span class="nc bnc" id="L158" title="All 2 branches missed.">        if(doBloodSplash){</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">            if(splashTime &gt; 1){</span>
+<span class="nc" id="L160">                doBloodSplash = false;</span>
+<span class="nc" id="L161">                splashTime = 0;</span>
+            }else{
+<span class="nc" id="L163">                splashTime += 1;</span>
+            }
+        }
+<span class="nc bnc" id="L166" title="All 2 branches missed.">        if(currentHealth &gt; 0){</span>
+<span class="nc" id="L167">            collegeBar.resize(currentHealth);</span>
+        }else{
+<span class="nc bnc" id="L169" title="All 2 branches missed.">            if(!Objects.equals(team, GameScreen.playerTeam)){ // Checks if the college is an enemy of the player</span>
+<span class="nc" id="L170">                captured = true;</span>
+                // College taken over
+<span class="nc" id="L172">                int pointsGained = 50;</span>
+<span class="nc" id="L173">                screen.points.Add(pointsGained);</span>
+<span class="nc" id="L174">                int lootGained = 15;</span>
+<span class="nc" id="L175">                screen.loot.Add(lootGained);</span>
+<span class="nc" id="L176">                College.capturedCount++;</span>
+<span class="nc" id="L177">                team = GameScreen.playerTeam;</span>
+<span class="nc" id="L178">            }else{</span>
+                // Destroy college
+<span class="nc" id="L180">                collegeBar = null;</span>
+<span class="nc" id="L181">                direction = null;</span>
+<span class="nc" id="L182">                destroy(screen);</span>
+            }
+        }
+<span class="nc" id="L185">    }</span>
+
+    /**
+     * Called when the college is captured
+     * @param screen        The main game screen
+     * @throws Exception    Inherited from changeImage
+     */
+    public void capturedUpdate (GameScreen screen) throws Exception{
+        // Change the health bar to green, change the indicator arrow to green.
+<span class="nc" id="L194">        Array&lt;Texture&gt; healthBarSprite = new Array&lt;&gt;();</span>
+<span class="nc" id="L195">        Array&lt;Texture&gt; indicatorSprite = new Array&lt;&gt;();</span>
+<span class="nc" id="L196">        healthBarSprite.add(new Texture(&quot;allyHealthBar.png&quot;));</span>
+<span class="nc" id="L197">        indicatorSprite.add(new Texture(&quot;allyArrow.png&quot;));</span>
+<span class="nc" id="L198">        boatTexture.clear();</span>
+<span class="nc" id="L199">        boatTexture.add(screen.getPlayer().anim.getKeyFrame(0f));</span>
+
+<span class="nc" id="L201">        Array&lt;Texture&gt; sprites = new Array&lt;&gt;();</span>
+<span class="nc" id="L202">        sprites.add(collegeImages.get(1));</span>
+<span class="nc" id="L203">        changeImage(sprites,0);</span>
+
+<span class="nc" id="L205">        collegeBar.changeImage(healthBarSprite,0);</span>
+<span class="nc" id="L206">        currentHealth = maxHealth;</span>
+<span class="nc" id="L207">        collegeBar.resize(currentHealth);</span>
+<span class="nc" id="L208">        direction.changeImage(indicatorSprite,0);</span>
+<span class="nc" id="L209">    }</span>
+
+    /**
+     * Called when a projectile hits the college.
+     * @param damage    The damage dealt by the projectile.
+     */
+    public void takeDamage(float damage){
+<span class="fc" id="L216">        super.takeDamage(damage);</span>
+        // Add red tint when hit.
+<span class="fc" id="L218">        doBloodSplash = true;</span>
+<span class="fc" id="L219">    }</span>
+
+    /**
+     * Getter for doBloodSplash
+     * @return  whether the college should have a red tint from getting hit.
+     */
+<span class="fc" id="L225">    public boolean getDoBloodSplash(){return doBloodSplash;}</span>
+
+    /**
+     * Called when the college needs to be destroyed.
+     * @param screen    The main game screen.
+     */
+    private void destroy(GameScreen screen){
+<span class="nc" id="L232">        screen.colleges.removeValue(this,true);</span>
+<span class="nc" id="L233">    }</span>
+
+    /**
+     * Called when drawing the object.
+     * @param batch         The batch to draw the object within.
+     * @param elapsedTime   The current time the game has been running for.
+     */
+    @Override
+    public void draw(SpriteBatch batch, float elapsedTime){
+<span class="nc bnc" id="L242" title="All 2 branches missed.">        if (shader == null){generateShader();}</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">        if(doBloodSplash)   batch.setShader(shader); // Set red shader to the batch</span>
+<span class="nc" id="L244">        else                batch.setShader(null);</span>
+
+        // Draw college
+<span class="nc" id="L247">        batch.draw(anim.getKeyFrame(elapsedTime, true), x - width/2, y - height/2, width, height);</span>
+
+        // Draw boats after college, so under
+<span class="nc" id="L250">        batch.setShader(null);</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">        for(int i = 0; i &lt; boats.size; i++){</span>
+<span class="nc" id="L252">            GameObject boat = boats.get(i);</span>
+<span class="nc" id="L253">            batch.draw(boatTexture.get(0), boat.x+boat.height, boat.y, 0,0, boat.width, boat.height,</span>
+<span class="nc" id="L254">                    1f, 1f, boatRotations.get(i), 0, 0,</span>
+<span class="nc" id="L255">                    boatTexture.get(0).getWidth(), boatTexture.get(0).getHeight(), false, false);</span>
+        }
+
+<span class="nc" id="L258">        collegeBar.draw(batch, 0);</span>
+<span class="nc" id="L259">        direction.draw(batch,0);</span>
+<span class="nc" id="L260">    }</span>
+
+    /**
+     * Add a boat to this college.
+     * @param x The x position of the new boat relative to the college.
+     * @param y The y position of the new boat relative to the college.
+     */
+    public void addBoat(float x, float y, float rotation){
+<span class="nc" id="L268">        GameObject newBoat = new GameObject(this.x+x, this.y+y, 25, 12, team);</span>
+<span class="nc" id="L269">        boats.add(newBoat);</span>
+        //boats.add(new GameObject(boatTexture, 0, this.x+x, this.y+y, 25, 12, team));
+<span class="nc" id="L271">        boatRotations.add(rotation);</span>
+<span class="nc" id="L272">    }</span>
+    // Get college name
+    public String getCollegeName() {
+<span class="nc" id="L275">        return collegeName;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
