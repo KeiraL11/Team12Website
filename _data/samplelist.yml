@@ -37,6 +37,6 @@ docs:
   target: _self
   
 - title: jar
-  url: /Team12Website/blob/main/jar/yorkpirates-1.0.1.jar
+  url: /Team12Website/jar/yorkpirates-1.0.1.jar
   target: _self
 
