@@ -45,7 +45,7 @@ Project deliverables (stored via Google Drive) can be accessed from this page.
 <br/>
 [**Assessment 2: Change in Planning Google Drive**](https://docs.google.com/document/d/1jkyl2TwQewOl9ZMQSb800WdmLhNnw8YndAKwmI6VKmA/edit?usp=sharing)
 <br/>
-[**Assessment 2: Change in Planning Download**]()
+[**Assessment 2: Change in Planning Download**](https://github.com/KeiraL11/Team12Website/raw/90b6610d29cee8a69007ec0b83e1c6f21dc6f955/documents/Plan1A2.pdf)
 <br/>
 [**Assessment 2: Change in Risks Google Drive**](https://docs.google.com/document/d/1lY9zUe-3LsdFkemnKGmzb4QPmbtBb94ghOtmsk-__04/edit?usp=sharing)
 <br/>
