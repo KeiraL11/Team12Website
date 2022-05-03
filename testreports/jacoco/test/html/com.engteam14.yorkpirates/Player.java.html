@@ -235,7 +235,7 @@ public class Player extends GameObject {
 
 <span class="fc bfc" id="L236" title="All 2 branches covered.">        if (TimeUtils.timeSinceMillis(takeMoreDamageStart) &gt; DAMAGE_POWERUP_TOTAL_LENGTH){</span>
 <span class="fc" id="L237">            setMaxHealth(nonBoostedMaxHealth);</span>
-<span class="fc bfc" id="L238" title="All 2 branches covered.">            if(currentHealth &gt; maxHealth) currentHealth = maxHealth;</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">            if(currentHealth &gt; maxHealth) currentHealth = maxHealth;</span>
         }
 
         //Timing how long the Speed powerup lasts
