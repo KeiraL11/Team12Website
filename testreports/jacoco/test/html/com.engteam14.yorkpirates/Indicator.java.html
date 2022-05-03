@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Indicator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.engteam14.yorkpirates</a> &gt; <span class="el_source">Indicator.java</span></div><h1>Indicator.java</h1><pre class="source lang-java linenums">package com.engteam14.yorkpirates;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
+
+public class Indicator extends GameObject{
+
+    private final Player player;
+    private final College college;
+
+    private Vector2 gradient;
+    private boolean visible;
+
+    /**
+     * Arrow which points to the college locations, green for ally colleges, red for enemy colleges.
+     * @param college   The college that the indicator is associated with.
+     * @param player    player, so that the arrows can change gradient and location, with the player.
+     * @param width     width of the arrow.
+     * @param height    height of the arrow.
+     */
+    public Indicator(College college, Player player, float width, float height) {
+<span class="nc" id="L25">        super(player.x, player.y, width, height, college.team);</span>
+
+<span class="nc" id="L27">        this.player = player;</span>
+<span class="nc" id="L28">        this.college = college;</span>
+<span class="nc" id="L29">        gradient = updateGradient();</span>
+<span class="nc" id="L30">        visible = false;</span>
+<span class="nc" id="L31">        move();</span>
+<span class="nc" id="L32">    }</span>
+
+    /**
+     * Called when drawing the Indicator.
+     * @param batch         The batch to draw the player within.
+     * @param elapsedTime   The current time the game has been running for.
+     */
+    @Override
+    public void draw(SpriteBatch batch, float elapsedTime){
+        // Draw the indicator if visible
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if(visible){</span>
+<span class="nc" id="L43">            float rotation = (float) Math.toDegrees(Math.atan2(gradient.y,gradient.x));</span>
+<span class="nc" id="L44">            batch.draw(sprite, x - width/2, y - height/2, width/2, height/2, width, height, 1f, 1f, rotation, 0, 0, sprite.getWidth(), sprite.getHeight(), false, false);</span>
+        }
+<span class="nc" id="L46">    }</span>
+
+    /**
+     * Called when updating the gradient of the Indicator.
+     */
+    public Vector2 updateGradient(){
+        // Calculate the gradient to draw the indicator at.
+<span class="nc" id="L53">        float changeInX = college.x - player.x;</span>
+<span class="nc" id="L54">        float changeInY = college.y - player.y;</span>
+<span class="nc" id="L55">        float scaleFactor = max(abs(changeInX),abs(changeInY));</span>
+<span class="nc" id="L56">        float dx = changeInX / scaleFactor;</span>
+<span class="nc" id="L57">        float dy = changeInY / scaleFactor;</span>
+
+<span class="nc" id="L59">        return (new Vector2(dx, dy));</span>
+    }
+
+    /**
+     * Moves the object within the x and y-axis of the game world.
+     */
+    void move(){
+<span class="nc" id="L66">        gradient = updateGradient();</span>
+<span class="nc" id="L67">        this.x = player.x + (50 * gradient.x);</span>
+<span class="nc" id="L68">        this.y = player.y + (50 * gradient.y);</span>
+<span class="nc" id="L69">    }</span>
+
+    /**
+     * Set whether the indicator is visible.
+     * @param visible   Whether the indicator is visible.
+     */
+    public void setVisible(boolean visible) {
+<span class="nc" id="L76">        this.visible = visible;</span>
+<span class="nc" id="L77">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

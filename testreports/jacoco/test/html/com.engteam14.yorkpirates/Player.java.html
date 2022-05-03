@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Player.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">com.engteam14.yorkpirates</a> &gt; <span class="el_source">Player.java</span></div><h1>Player.java</h1><pre class="source lang-java linenums">package com.engteam14.yorkpirates;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
+
+public class Player extends GameObject {
+
+    // Player constants
+    private static final int POINT_FREQUENCY = 1000; // How often the player gains points by moving.
+    private static final float CAMERA_SLACK = 0.1f; // What percentage of the screen the player can move in before the camera follows.
+    private static final float SPEED =70f; // Player movement speed.
+    //Related to power-ups.
+    private static final int DAMAGE_POWERUP_VALUE = 500;
+    private static final int DAMAGE_POWERUP_TOTAL_LENGTH = 10000;
+    private static final int IMMUNITY_POWERUP_LENGTH = 10000;
+    private static final int TAKE_DAMAGE_INCREASE = 450;
+    private static final int SPEED_POWERUP_TOTAL_LENGTH = 25000;
+<span class="fc" id="L24">    private int speedMultiplier = 1;</span>
+<span class="fc" id="L25">    private static int timeBeforeRegen = 10000;</span>
+<span class="fc" id="L26">    private static double regenAmount = 0.03;</span>
+<span class="fc" id="L27">    private static int nonBoostedMaxHealth = 300;</span>
+<span class="fc" id="L28">    private static float enemyDamageMultiplier = 1;</span>
+
+<span class="fc" id="L30">    private static String difficulty = &quot;Normal&quot;;</span>
+
+    // Movement calculation values
+    private int previousDirectionX;
+    private int previousDirectionY;
+    public float distance;
+    private long lastMovementScore;
+
+    private HealthBar playerHealth;
+    public long currentTime;
+    private float splashTime;
+    private long timeLastHit;
+<span class="fc" id="L42">    private boolean doBloodSplash = false;</span>
+
+<span class="fc" id="L44">    private float defaultDamage = 20;</span>
+
+<span class="fc" id="L46">    private float playerDamage = 20;</span>
+    public long damageIncreaseStart;
+<span class="fc" id="L48">    private boolean immune = false;</span>
+    public long takeMoreDamageStart;
+    public long speedStart;
+    public long immunityStart;
+
+
+    /**
+     * Generates a generic object within the game with animated frame(s) and a hit-box.
+     * @param x         The x coordinate within the map to initialise the object at.
+     * @param y         The y coordinate within the map to initialise the object at.
+     * @param width     The size of the object in the x-axis.
+     * @param height    The size of the object in the y-axis.
+     * @param team      The team the player is on.
+     */
+    public Player(float x, float y, float width, float height, String team){
+<span class="fc" id="L63">        super(x, y, width, height, team);</span>
+<span class="fc" id="L64">        lastMovementScore = 0;</span>
+<span class="fc" id="L65">        splashTime = 0;</span>
+
+        // Generate health
+<span class="fc" id="L68">        setMaxHealth(nonBoostedMaxHealth);</span>
+<span class="fc" id="L69">        setCurrentHealth(getMaxHealth());</span>
+<span class="fc" id="L70">    }</span>
+    public void changeImage(Array&lt;Texture&gt; frames, float fps) throws Exception {
+<span class="nc" id="L72">        super.changeImage(frames,frames.size-1);</span>
+        //Making the health bar.
+<span class="nc" id="L74">        Array&lt;Texture&gt; sprites = new Array&lt;&gt;();</span>
+<span class="nc" id="L75">        sprites.add(new Texture(&quot;allyHealthBar.png&quot;));</span>
+<span class="nc" id="L76">        createHealthBar();</span>
+<span class="nc" id="L77">        playerHealth.changeImage(sprites);</span>
+<span class="nc" id="L78">    }</span>
+    public void createHealthBar(){
+<span class="fc" id="L80">        playerHealth  = new HealthBar(this);</span>
+<span class="fc" id="L81">    }</span>
+    /**
+     * Called once per frame. Used to perform calculations such as player/camera movement.
+     * @param screen    The main game screen.
+     * @param camera    The player camera.
+     */
+    public void update(GameScreen screen, OrthographicCamera camera){
+<span class="nc" id="L88">        Vector2 oldPos = new Vector2(x,y); // Stored for next-frame calculations</span>
+
+        // Get input movement
+<span class="nc bnc" id="L91" title="All 4 branches missed.">        int horizontal = ((Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) ? 1 : 0)</span>
+<span class="nc bnc" id="L92" title="All 4 branches missed.">                - ((Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) ? 1 : 0);</span>
+<span class="nc bnc" id="L93" title="All 4 branches missed.">        int vertical = ((Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) ? 1 : 0)</span>
+<span class="nc bnc" id="L94" title="All 4 branches missed.">                - ((Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) ? 1 : 0);</span>
+
+        // Weather
+        // The player moves at 0.5 times speed when inside bad weather.
+<span class="nc" id="L98">        float weatherMovement = 1;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        for(int i = 0; i&lt;screen.weatherArray.size; i++){</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            if (this.overlaps(screen.weatherArray.get(i).hitBox)){</span>
+<span class="nc" id="L101">                weatherMovement = 0.5f;</span>
+            }
+        }
+        // Calculate collision &amp;&amp; movement
+<span class="nc bnc" id="L105" title="All 4 branches missed.">        if (horizontal != 0 || vertical != 0){</span>
+            // Move the player, also change the amount the player
+<span class="nc" id="L107">            move(speedMultiplier* weatherMovement *SPEED*horizontal,</span>
+<span class="nc" id="L108">                    speedMultiplier* weatherMovement *SPEED*vertical, Gdx.graphics.getDeltaTime());</span>
+<span class="nc" id="L109">            previousDirectionX = horizontal;</span>
+<span class="nc" id="L110">            previousDirectionY = vertical;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">            if (safeMove(screen.getMain().edges)) {</span>
+                //Add points to the player when they move
+<span class="nc bnc" id="L113" title="All 2 branches missed.">                if (TimeUtils.timeSinceMillis(lastMovementScore) &gt; POINT_FREQUENCY) {</span>
+<span class="nc" id="L114">                    lastMovementScore = TimeUtils.millis();</span>
+<span class="nc" id="L115">                    screen.points.Add(1);</span>
+                }
+            } else {    // Collision
+<span class="nc" id="L118">                Vector2 newPos = new Vector2(x, y);</span>
+<span class="nc" id="L119">                x = oldPos.x;</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">                if (!safeMove(screen.getMain().edges)) {</span>
+<span class="nc" id="L121">                    x = newPos.x;</span>
+<span class="nc" id="L122">                    y = oldPos.y;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">                    if (!safeMove(screen.getMain().edges)) {</span>
+<span class="nc" id="L124">                        x = oldPos.x;</span>
+                    }
+                }
+            }
+        }
+        //Update the hitbox of the player after they have moved.
+<span class="nc" id="L130">        updateHitboxPos();</span>
+        // Track distance travelled
+<span class="nc" id="L132">        distance += Math.pow((Math.pow((x - oldPos.x),2f) + Math.pow((y - oldPos.y),2f)),0.5f)/10f;</span>
+
+        // Health-bar reduction
+<span class="nc bnc" id="L135" title="All 2 branches missed.">        if(currentHealth &gt; 0){</span>
+<span class="nc" id="L136">            playerHealth.resize(currentHealth);</span>
+        }else{
+<span class="nc" id="L138">            playerHealth = null;</span>
+<span class="nc" id="L139">            screen.gameEnd(false);</span>
+        }
+        //All of the timers that go in the game: Power ups, blood splash, health regen.
+<span class="nc" id="L142">        timerManager();</span>
+        // Camera Calculations
+<span class="nc" id="L144">        ProcessCamera(screen, camera);</span>
+
+
+<span class="nc" id="L147">    }</span>
+
+    /**
+     *  Calculate if the current player position is safe to be in.
+     * @param edges A 2d array containing safe/unsafe positions to be in.
+     * @return      If the current position is safe.
+     */
+    private Boolean safeMove(Array&lt;Array&lt;Boolean&gt;&gt; edges){
+<span class="nc" id="L155">        return (</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">                        edges.get((int)((y+height/2)/16)).get((int)((x+width/2)/16)) &amp;&amp;</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">                        edges.get((int)((y+height/2)/16)).get((int)((x-width/2)/16)) &amp;&amp;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">                        edges.get((int)((y-height/2)/16)).get((int)((x+width/2)/16)) &amp;&amp;</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">                        edges.get((int)((y-height/2)/16)).get((int)((x-width/2)/16))</span>
+        );
+    }
+
+    /**
+     * Moves the player within the x and y-axis of the game world.
+     * @param x     The amount to move the object within the x-axis.
+     * @param y     The amount to move the object within the y-axis.
+     * @param delta Allows for the standardised movement speed.
+     */
+    @Override
+    public void move(float x, float y, float delta){
+<span class="fc" id="L171">        this.x += x * delta;</span>
+<span class="fc" id="L172">        this.y += y * delta;</span>
+        // Healthbar moves with player
+<span class="fc" id="L174">        playerHealth.move(this.x, this.y + height/2 + 2f, delta);</span>
+<span class="fc" id="L175">    }</span>
+
+    /**
+     * Called when a projectile hits the college.
+     * @param damage            The damage dealt by the projectile.
+     */
+    @Override
+    public void takeDamage(float damage){
+<span class="fc" id="L183">        timeLastHit = TimeUtils.millis();</span>
+        // If the immunity power up is active, take no damage.
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">        if (immune){</span>
+<span class="nc" id="L186">            damage = 0;</span>
+        }
+        // The damage that the player takes changes depending on difficulty level
+        // enemyDamageMultiplier changes depending on the difficulty methods.
+<span class="fc" id="L190">        currentHealth -= damage * enemyDamageMultiplier;</span>
+        // Add the red tint to the player when hit.
+<span class="fc" id="L192">        doBloodSplash = true;</span>
+<span class="fc" id="L193">    }</span>
+
+    /**
+     * Manages all of the various timers that the player needs to keep track of.
+     * Resets values to the default values, when the timers run out.
+     *      - Red tint that the player has when they get hit.
+     *      - Natural regeneration of health.
+     *      - damage increase  power up {@link #damageIncrease()}
+     *      - immunity power up {@link #immunityPowerup()}
+     *      - temporary health increase {@link #takeMoreDamagePowerup()}
+     *      - speed increase power up {@link #speedPowerup()}
+     */
+    public void timerManager(){
+        // Blood splash calculations
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">        if(doBloodSplash){</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">            if(splashTime &gt; 1){</span>
+<span class="fc" id="L209">                doBloodSplash = false;</span>
+<span class="fc" id="L210">                splashTime = 0;</span>
+            }else{
+<span class="fc" id="L212">                splashTime += 1;</span>
+            }
+        }
+<span class="fc" id="L215">        currentTime = TimeUtils.millis();</span>
+        //If it has been 10 seconds since the player was last hit, then health will increase.
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">        if (currentTime - timeLastHit &gt; timeBeforeRegen){</span>
+<span class="nc" id="L218">            currentHealth += regenAmount;</span>
+            //If current health goes above the max, then it will remain at max health.
+<span class="nc bnc" id="L220" title="All 2 branches missed.">            if(currentHealth &gt; maxHealth) currentHealth = maxHealth;</span>
+<span class="nc" id="L221">            playerHealth.resize(currentHealth);</span>
+        }
+
+        //Timing how long the GiveMoreDamage powerup lasts
+<span class="pc bpc" id="L225" title="1 of 2 branches missed.">        if(currentTime - damageIncreaseStart &gt; DAMAGE_POWERUP_TOTAL_LENGTH){</span>
+<span class="fc" id="L226">            playerDamage = defaultDamage;</span>
+        }
+
+        //Timing how long the Immunity powerup lasts
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">        if (currentTime - immunityStart &gt; IMMUNITY_POWERUP_LENGTH){</span>
+<span class="fc" id="L231">            setImmune(false);</span>
+        }
+
+        ////Timing how long the TakeMoreDamage powerup lasts
+
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">        if (TimeUtils.timeSinceMillis(takeMoreDamageStart) &gt; DAMAGE_POWERUP_TOTAL_LENGTH){</span>
+<span class="fc" id="L237">            setMaxHealth(nonBoostedMaxHealth);</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">            if(currentHealth &gt; maxHealth) currentHealth = maxHealth;</span>
+        }
+
+        //Timing how long the Speed powerup lasts
+<span class="pc bpc" id="L242" title="1 of 2 branches missed.">        if (currentTime - speedStart &gt; SPEED_POWERUP_TOTAL_LENGTH){</span>
+<span class="fc" id="L243">            speedMultiplier = 1;</span>
+        }
+<span class="fc" id="L245">    }</span>
+    /**
+     * Called after update(), calculates whether the camera should follow the player and passes it to the game screen.
+     * @param screen    The main game screen.
+     * @param camera    The player camera.
+     */
+    private void ProcessCamera(GameScreen screen, OrthographicCamera camera) {
+<span class="nc" id="L252">        Vector2 camDiff = new Vector2(x - camera.position.x, y - camera.position.y);</span>
+<span class="nc bnc" id="L253" title="All 4 branches missed.">        screen.toggleFollowPlayer(Math.abs(camDiff.x) &gt; camera.viewportWidth / 2 * CAMERA_SLACK || Math.abs(camDiff.y) &gt; camera.viewportWidth / 2 * CAMERA_SLACK);</span>
+<span class="nc" id="L254">    }</span>
+
+    /**
+     * Called when drawing the player.
+     * @param batch         The batch to draw the player within.
+     * @param elapsedTime   The current time the game has been running for.
+     */
+    @Override
+    public void draw(SpriteBatch batch, float elapsedTime){
+<span class="nc bnc" id="L263" title="All 2 branches missed.">        if (shader==null){generateShader();}</span>
+        // Generates the sprite, the image changes depending on the players current health.
+<span class="nc bnc" id="L265" title="All 4 branches missed.">        Texture frame = anim.getKeyFrame((currentHealth/maxHealth &gt; 0.66f) ? 0 : ((currentHealth/maxHealth &gt; 0.33f) ? 2 : 1), true);</span>
+        // Add a red tint if the player has been hit.
+<span class="nc bnc" id="L267" title="All 2 branches missed.">        if(doBloodSplash){</span>
+<span class="nc" id="L268">            batch.setShader(shader); // Set our grey-out shader to the batch</span>
+            //Rotate the image so that the ship faces the direction of travel.
+<span class="nc" id="L270">        } float rotation = (float) Math.toDegrees(Math.atan2(previousDirectionY, previousDirectionX));</span>
+
+        // Draws sprite
+<span class="nc" id="L273">        batch.draw(frame, x - width/2, y - height/2, width/2, height/2, width, height, 1f, 1f, rotation, 0, 0, frame.getWidth(), frame.getHeight(), false, false);</span>
+<span class="nc" id="L274">        batch.setShader(null);</span>
+<span class="nc" id="L275">    }</span>
+
+    /**
+     * Draws the Player's health bar
+     * @param batch     The batch used to draw player health.
+     */
+    public void drawHealthBar(SpriteBatch batch){
+<span class="nc bnc" id="L282" title="All 2 branches missed.">        if(!(playerHealth == null)) playerHealth.draw(batch, 0);</span>
+<span class="nc" id="L283">    }</span>
+
+    /**
+     * Getter for distance travelled
+     * @return total distance travelled.
+     */
+    public float getDistance() {
+<span class="nc" id="L290">        return distance;</span>
+    }
+
+    /**
+     * Getter for player's current damage.
+     * @return how much the player's projectiles damage.
+     */
+    public float getPlayerDamage() {
+<span class="fc" id="L298">        return playerDamage;</span>
+    }
+
+    //Power up methods.
+
+    /**
+     * Damage increases for a set amount of real world time.
+     */
+    public void damageIncrease(){
+<span class="nc" id="L307">        this.playerDamage = DAMAGE_POWERUP_VALUE;</span>
+<span class="nc" id="L308">        this.damageIncreaseStart = TimeUtils.millis();</span>
+<span class="nc" id="L309">    }</span>
+
+    /**
+     * Give the player max health.
+     */
+    public void giveMaxHealth(){
+<span class="fc" id="L315">        this.setCurrentHealth(nonBoostedMaxHealth);</span>
+<span class="fc" id="L316">        playerHealth.resize(currentHealth);</span>
+<span class="fc" id="L317">    }</span>
+
+    /**
+     * Gives the player immunity, projectiles no longer do damage for a set amount of time.
+     */
+    public void immunityPowerup(){
+<span class="nc" id="L323">        this.immunityStart = TimeUtils.millis();</span>
+<span class="nc" id="L324">        setImmune(true);</span>
+<span class="nc" id="L325">    }</span>
+
+    /**
+     * Getter for the immune value.
+     * @return whether the player is immune from damage.
+     */
+<span class="nc" id="L331">    public boolean getImmune(){return immune;}</span>
+
+    /**
+     * Setter for the immune value.
+     * @param i change the attribute &quot;immune&quot; to the value of input.
+     */
+<span class="fc" id="L337">    public void setImmune(boolean i){immune = i;}</span>
+
+    /**
+     * The player's maximum health increases temporarily
+     * player is also given max health.
+     */
+    public void takeMoreDamagePowerup(){
+<span class="nc" id="L344">        this.takeMoreDamageStart = TimeUtils.millis();</span>
+<span class="nc" id="L345">        setMaxHealth(TAKE_DAMAGE_INCREASE);</span>
+<span class="nc" id="L346">        setCurrentHealth(getMaxHealth());</span>
+<span class="nc" id="L347">    }</span>
+
+    /**
+     * The player can travel 2 times faster temporarily.
+     */
+    public void speedPowerup(){
+<span class="nc" id="L353">        this.speedStart = TimeUtils.millis();</span>
+<span class="nc" id="L354">        speedMultiplier = 2;</span>
+<span class="nc" id="L355">    }</span>
+
+    /**
+     * Getter for the speed multiplier
+     * @return the magnitude of the speed increase of the player when the speed powerup is active.
+     */
+<span class="nc" id="L361">    public int getSpeedMultiplier(){return speedMultiplier;}</span>
+
+    /**
+     * Setter for maximum health, when {@link #takeMoreDamagePowerup()} isn't active.
+     * @param mh    Set the value of maximum health without powerups.
+     */
+<span class="fc" id="L367">    public void setNonBoostedMaxHealth(int mh){nonBoostedMaxHealth = mh;}</span>
+
+    /**
+     * Getter for nonBoostedMaxHealth
+     * @return  Get the value of maximum health without power ups.
+     */
+<span class="nc" id="L373">    public int getNonBoostedMaxHealth(){return nonBoostedMaxHealth;}</span>
+
+    //Difficulty Methods
+    /**
+     * Sets the difficulty to easy
+     */
+    public void setEasy(){
+<span class="fc" id="L380">        regenAmount = 0.06;</span>
+<span class="fc" id="L381">        timeBeforeRegen = 5000;</span>
+<span class="fc" id="L382">        enemyDamageMultiplier = 1;</span>
+<span class="fc" id="L383">        defaultDamage = 30;</span>
+<span class="fc" id="L384">        playerDamage = defaultDamage;</span>
+<span class="fc" id="L385">        setMaxHealth(400);</span>
+<span class="fc" id="L386">        setNonBoostedMaxHealth(getMaxHealth());</span>
+<span class="fc" id="L387">        setCurrentHealth(getMaxHealth());</span>
+<span class="fc" id="L388">        difficulty = &quot;Easy&quot;;</span>
+<span class="fc" id="L389">    }</span>
+
+    /**
+     * Sets the difficulty to Normal
+     */
+    public void setNormal(){
+<span class="fc" id="L395">        regenAmount = 0.03;</span>
+<span class="fc" id="L396">        timeBeforeRegen = 10000;</span>
+<span class="fc" id="L397">        enemyDamageMultiplier = 1.5f;</span>
+<span class="fc" id="L398">        defaultDamage = 20;</span>
+<span class="fc" id="L399">        playerDamage = defaultDamage;</span>
+<span class="fc" id="L400">        setMaxHealth(300);</span>
+<span class="fc" id="L401">        setNonBoostedMaxHealth(getMaxHealth());</span>
+<span class="fc" id="L402">        setCurrentHealth(getMaxHealth());</span>
+<span class="fc" id="L403">        difficulty = &quot;Normal&quot;;</span>
+<span class="fc" id="L404">    }</span>
+
+    /**
+     * Sets the difficulty to hard.
+     */
+    public void setHard(){
+<span class="fc" id="L410">        regenAmount = 0;</span>
+<span class="fc" id="L411">        timeBeforeRegen = 10000;</span>
+<span class="fc" id="L412">        enemyDamageMultiplier = 2f;</span>
+<span class="fc" id="L413">        defaultDamage = 15;</span>
+<span class="fc" id="L414">        playerDamage = defaultDamage;</span>
+<span class="fc" id="L415">        setMaxHealth(200);</span>
+<span class="fc" id="L416">        setNonBoostedMaxHealth(getMaxHealth());</span>
+<span class="fc" id="L417">        setCurrentHealth(getMaxHealth());</span>
+<span class="fc" id="L418">        difficulty = &quot;Hard&quot;;</span>
+<span class="fc" id="L419">    }</span>
+
+    /**
+     * Getter for the string difficulty.
+     * see {@link #setEasy()}, {@link #setNormal()}, {@link #setHard()} for attribute values.
+     * @return difficulty - implies what some of the other attribute values are set to.
+     */
+<span class="fc" id="L426">    public String getDifficulty(){ return difficulty;}</span>
+
+    /**
+     * Getter for the health bar of the player.
+     * @return playerHealth - allows for access to the HealthBar methods through the player
+     */
+<span class="fc" id="L432">    public HealthBar getPlayerHealth(){return playerHealth;}</span>
+
+    /**
+     * Getter for doBloodSplash
+     * @return  whether the player should be tinted red.
+     */
+<span class="fc" id="L438">    public boolean isDoBloodSplash(){return doBloodSplash;}</span>
+    /**
+     * Debugging tool, prints certain attributes of the Player class.
+     */
+    public void printStats(){
+<span class="nc" id="L443">        System.out.println(&quot;Regen: &quot; + regenAmount);</span>
+<span class="nc" id="L444">        System.out.println(&quot;timeBeforeRegen: &quot; + timeBeforeRegen);</span>
+<span class="nc" id="L445">        System.out.println(&quot;enemydmgmult: &quot; + enemyDamageMultiplier);</span>
+<span class="nc" id="L446">        System.out.println(&quot;def dmg: &quot; + defaultDamage);</span>
+<span class="nc" id="L447">        System.out.println(&quot;current dmg&quot; + playerDamage);</span>
+<span class="nc" id="L448">        System.out.println(&quot;maxhealth: &quot; + maxHealth);</span>
+<span class="nc" id="L449">        System.out.println(&quot;x: &quot; + this.x + &quot; y: &quot; + y);</span>
+<span class="nc" id="L450">        System.out.println(&quot;Immune: &quot; + this.immune);</span>
+<span class="nc" id="L451">        System.out.println(&quot;Current Health: &quot; + this.currentHealth);</span>
+<span class="nc" id="L452">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
