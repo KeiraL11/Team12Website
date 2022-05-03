@@ -67,68 +67,70 @@ public class TitleScreen extends ScreenAdapter {
 
         // Generate buttons
 <span class="nc" id="L69">        ImageTextButton loadButton = new ImageTextButton(&quot;Load Game Save&quot;, skin);</span>
-<span class="nc" id="L70">        ImageTextButton easyButton = new ImageTextButton(&quot;Easy&quot;, skin);</span>
-<span class="nc" id="L71">        ImageTextButton normalButton = new ImageTextButton(&quot;Normal&quot;, skin);</span>
-<span class="nc" id="L72">        ImageTextButton hardButton = new ImageTextButton(&quot;Hard&quot;, skin);</span>
+<span class="nc" id="L70">        ImageTextButton easyButton = new ImageTextButton(&quot;New Game - Easy&quot;, skin);</span>
+<span class="nc" id="L71">        ImageTextButton normalButton = new ImageTextButton(&quot;New Game - Normal&quot;, skin);</span>
+<span class="nc" id="L72">        ImageTextButton hardButton = new ImageTextButton(&quot;New Game - Hard&quot;, skin);</span>
 <span class="nc" id="L73">        ImageTextButton quitButton = new ImageTextButton(&quot;Exit Game&quot;, skin, &quot;Quit&quot;);</span>
 
 <span class="nc" id="L75">        loadButton.addListener(new ClickListener() {</span>
             public void clicked(InputEvent event, float x, float y) {
                 try {
-<span class="nc" id="L78">                    loadGame();</span>
-<span class="nc" id="L79">                } catch (Exception e) {</span>
-<span class="nc" id="L80">                    throw new RuntimeException(e);</span>
-<span class="nc" id="L81">                }</span>
-<span class="nc" id="L82">            }</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                    if (game.prefs.contains(&quot;PlayerName&quot;)) {</span>
+<span class="nc" id="L79">                        loadGame();</span>
+                    }
+<span class="nc" id="L81">                } catch (Exception e) {</span>
+<span class="nc" id="L82">                    throw new RuntimeException(e);</span>
+<span class="nc" id="L83">                }</span>
+<span class="nc" id="L84">            }</span>
         });
-<span class="nc" id="L84">        easyButton.addListener(new ClickListener() {</span>
+<span class="nc" id="L86">        easyButton.addListener(new ClickListener() {</span>
             public void clicked(InputEvent event, float x, float y) {
-<span class="nc" id="L86">                setEasy();</span>
-<span class="nc" id="L87">            }</span>
+<span class="nc" id="L88">                setEasy();</span>
+<span class="nc" id="L89">            }</span>
         });
-<span class="nc" id="L89">        normalButton.addListener(new ClickListener() {</span>
+<span class="nc" id="L91">        normalButton.addListener(new ClickListener() {</span>
             public void clicked(InputEvent event, float x, float y) {
-<span class="nc" id="L91">                setNormal();</span>
-<span class="nc" id="L92">            }</span>
+<span class="nc" id="L93">                setNormal();</span>
+<span class="nc" id="L94">            }</span>
         });
-<span class="nc" id="L94">        hardButton.addListener(new ClickListener() {</span>
+<span class="nc" id="L96">        hardButton.addListener(new ClickListener() {</span>
             public void clicked(InputEvent event, float x, float y) {
-<span class="nc" id="L96">                setHard();</span>
-<span class="nc" id="L97">            }</span>
+<span class="nc" id="L98">                setHard();</span>
+<span class="nc" id="L99">            }</span>
         });
-<span class="nc" id="L99">        quitButton.addListener(new ClickListener() {</span>
+<span class="nc" id="L101">        quitButton.addListener(new ClickListener() {</span>
             public void clicked(InputEvent event, float x, float y) {
-<span class="nc" id="L101">                game.quit();</span>
-<span class="nc" id="L102">            }</span>
+<span class="nc" id="L103">                game.quit();</span>
+<span class="nc" id="L104">            }</span>
         });
 
         // Add title to table
-<span class="nc" id="L106">        titleCell = table.add(title).expand();</span>
+<span class="nc" id="L108">        titleCell = table.add(title).expand();</span>
 
         // Add textbox to table
-<span class="nc" id="L109">        table.row();</span>
-<span class="nc" id="L110">        Table textBoxFiller = new Table();</span>
-<span class="nc" id="L111">        textBoxFiller.add().expand().padRight(stage.getWidth()/3);</span>
-<span class="nc" id="L112">        textBoxFiller.add(textBox).expand().fillX();</span>
-<span class="nc" id="L113">        textBoxFiller.add().expand().padLeft(stage.getWidth()/3);</span>
+<span class="nc" id="L111">        table.row();</span>
+<span class="nc" id="L112">        Table textBoxFiller = new Table();</span>
+<span class="nc" id="L113">        textBoxFiller.add().expand().padRight(stage.getWidth()/3);</span>
+<span class="nc" id="L114">        textBoxFiller.add(textBox).expand().fillX();</span>
+<span class="nc" id="L115">        textBoxFiller.add().expand().padLeft(stage.getWidth()/3);</span>
         if(YorkPirates.DEBUG_ON) textBoxFiller.debug();
-<span class="nc" id="L115">        table.add(textBoxFiller).expand().fill();</span>
+<span class="nc" id="L117">        table.add(textBoxFiller).expand().fill();</span>
 
         // Add buttons to table
-<span class="nc" id="L118">        table.row();</span>
-<span class="nc" id="L119">        table.add(loadButton).expand();</span>
 <span class="nc" id="L120">        table.row();</span>
-<span class="nc" id="L121">        table.add(easyButton).expand();</span>
+<span class="nc" id="L121">        table.add(loadButton).expand();</span>
 <span class="nc" id="L122">        table.row();</span>
-<span class="nc" id="L123">        table.add(normalButton).expand();</span>
+<span class="nc" id="L123">        table.add(easyButton).expand();</span>
 <span class="nc" id="L124">        table.row();</span>
-<span class="nc" id="L125">        table.add(hardButton).expand();</span>
+<span class="nc" id="L125">        table.add(normalButton).expand();</span>
 <span class="nc" id="L126">        table.row();</span>
-<span class="nc" id="L127">        table.add(quitButton).expand();</span>
+<span class="nc" id="L127">        table.add(hardButton).expand();</span>
+<span class="nc" id="L128">        table.row();</span>
+<span class="nc" id="L129">        table.add(quitButton).expand();</span>
 
         // Add table to the stage
-<span class="nc" id="L130">        stage.addActor(table);</span>
-<span class="nc" id="L131">    }</span>
+<span class="nc" id="L132">        stage.addActor(table);</span>
+<span class="nc" id="L133">    }</span>
 
     /**
      * Is called once every frame. Runs update() and then renders the title screen.
@@ -137,32 +139,32 @@ public class TitleScreen extends ScreenAdapter {
     @Override
     public void render(float delta){
         // Update values
-<span class="nc" id="L140">        elapsedTime += delta;</span>
-<span class="nc" id="L141">        update();</span>
-<span class="nc" id="L142">        game.camera.update();</span>
-<span class="nc" id="L143">        game.batch.setProjectionMatrix(game.camera.combined);</span>
+<span class="nc" id="L142">        elapsedTime += delta;</span>
+<span class="nc" id="L143">        update();</span>
+<span class="nc" id="L144">        game.camera.update();</span>
+<span class="nc" id="L145">        game.batch.setProjectionMatrix(game.camera.combined);</span>
 
         // Render background
-<span class="nc" id="L146">        ScreenUtils.clear(0f, 0f, 0f, 1.0f);</span>
-<span class="nc" id="L147">        nextGame.render(delta);</span>
+<span class="nc" id="L148">        ScreenUtils.clear(0f, 0f, 0f, 1.0f);</span>
+<span class="nc" id="L149">        nextGame.render(delta);</span>
 
         // Animate title
-<span class="nc" id="L150">        TextureRegion frame = game.logo.getKeyFrame(elapsedTime, true);</span>
-<span class="nc" id="L151">        titleCell.setActor(new Image(frame));</span>
+<span class="nc" id="L152">        TextureRegion frame = game.logo.getKeyFrame(elapsedTime, true);</span>
+<span class="nc" id="L153">        titleCell.setActor(new Image(frame));</span>
 
         // Draw UI over the top
-<span class="nc" id="L154">        stage.draw();</span>
-<span class="nc" id="L155">    }</span>
+<span class="nc" id="L156">        stage.draw();</span>
+<span class="nc" id="L157">    }</span>
 
     /**
      * Is called once every frame to check for player input.
      */
     private void update(){
-<span class="nc bnc" id="L161" title="All 2 branches missed.">        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){</span>
-<span class="nc" id="L162">            nextGame.setNormal();</span>
-<span class="nc" id="L163">            gameStart();</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){</span>
+<span class="nc" id="L164">            nextGame.setNormal();</span>
+<span class="nc" id="L165">            gameStart();</span>
         }
-<span class="nc" id="L165">    }</span>
+<span class="nc" id="L167">    }</span>
 
     /**
      * Is called to create a new game screen.
@@ -170,80 +172,80 @@ public class TitleScreen extends ScreenAdapter {
     private void gameStart(){
         // Get player name
         String playerName;
-<span class="nc bnc" id="L173" title="All 4 branches missed.">        if ( textBox.getText().equals(&quot;Name (optional)&quot;) || textBox.getText().equals(&quot;&quot;)) {</span>
-<span class="nc" id="L174">            playerName = &quot;Player&quot;;</span>
+<span class="nc bnc" id="L175" title="All 4 branches missed.">        if ( textBox.getText().equals(&quot;Name (optional)&quot;) || textBox.getText().equals(&quot;&quot;)) {</span>
+<span class="nc" id="L176">            playerName = &quot;Player&quot;;</span>
 
         } else{
-<span class="nc" id="L177">            playerName = textBox.getText();</span>
+<span class="nc" id="L179">            playerName = textBox.getText();</span>
         }
         // Set player name and unpause game
-<span class="nc" id="L180">        nextGame.setPaused(false);</span>
-<span class="nc" id="L181">        nextGame.setPlayerName(playerName);</span>
-<span class="nc" id="L182">        game.setScreen(nextGame);</span>
-<span class="nc" id="L183">    }</span>
+<span class="nc" id="L182">        nextGame.setPaused(false);</span>
+<span class="nc" id="L183">        nextGame.setPlayerName(playerName);</span>
+<span class="nc" id="L184">        game.setScreen(nextGame);</span>
+<span class="nc" id="L185">    }</span>
 
     /**
      * Set the game mode to easy
      */
     private void setEasy(){
-<span class="nc" id="L189">        nextGame.setEasy();</span>
-<span class="nc" id="L190">        gameStart();</span>
-<span class="nc" id="L191">    }</span>
+<span class="nc" id="L191">        nextGame.setEasy();</span>
+<span class="nc" id="L192">        gameStart();</span>
+<span class="nc" id="L193">    }</span>
 
     /**
      * Set the game mode to normal
      */
     private void setNormal(){
-<span class="nc" id="L197">        nextGame.setNormal();</span>
-<span class="nc" id="L198">        gameStart();</span>
-<span class="nc" id="L199">    }</span>
+<span class="nc" id="L199">        nextGame.setNormal();</span>
+<span class="nc" id="L200">        gameStart();</span>
+<span class="nc" id="L201">    }</span>
 
     /**
      * Set the game mode to hard.
      */
     private void setHard(){
-<span class="nc" id="L205">        nextGame.setHard();</span>
-<span class="nc" id="L206">        gameStart();</span>
-<span class="nc" id="L207">    }</span>
+<span class="nc" id="L207">        nextGame.setHard();</span>
+<span class="nc" id="L208">        gameStart();</span>
+<span class="nc" id="L209">    }</span>
 
     private void loadGame(){
         // Get player name
-<span class="nc" id="L211">        String playerName = game.prefs.getString(&quot;PlayerName&quot;, &quot;Player&quot;);</span>
-<span class="nc" id="L212">        nextGame.getPlayer().currentHealth = game.prefs.getFloat(&quot;PlayerHealth&quot;);</span>
-<span class="nc" id="L213">        nextGame.getPlayer().x = game.prefs.getFloat(&quot;Playerx&quot;);</span>
-<span class="nc" id="L214">        nextGame.getPlayer().y = game.prefs.getFloat(&quot;Playery&quot;);</span>
-<span class="nc" id="L215">        nextGame.loot.score = game.prefs.getInteger(&quot;PlayerLoot&quot;);</span>
-<span class="nc" id="L216">        nextGame.points.score = game.prefs.getInteger(&quot;PlayerPoints&quot;);</span>
-<span class="nc" id="L217">        nextGame.getPlayer().distance = game.prefs.getFloat(&quot;PlayerDistance&quot;);</span>
-<span class="nc" id="L218">        College.capturedCount = game.prefs.getInteger(&quot;capturedCount&quot;);</span>
+<span class="nc" id="L213">        String playerName = game.prefs.getString(&quot;PlayerName&quot;);</span>
+<span class="nc" id="L214">        nextGame.getPlayer().currentHealth = game.prefs.getFloat(&quot;PlayerHealth&quot;);</span>
+<span class="nc" id="L215">        nextGame.getPlayer().x = game.prefs.getFloat(&quot;Playerx&quot;);</span>
+<span class="nc" id="L216">        nextGame.getPlayer().y = game.prefs.getFloat(&quot;Playery&quot;);</span>
+<span class="nc" id="L217">        nextGame.loot.score = game.prefs.getInteger(&quot;PlayerLoot&quot;);</span>
+<span class="nc" id="L218">        nextGame.points.score = game.prefs.getInteger(&quot;PlayerPoints&quot;);</span>
+<span class="nc" id="L219">        nextGame.getPlayer().distance = game.prefs.getFloat(&quot;PlayerDistance&quot;);</span>
+<span class="nc" id="L220">        College.capturedCount = game.prefs.getInteger(&quot;capturedCount&quot;);</span>
 
-<span class="nc bnc" id="L220" title="All 2 branches missed.">        for (int i = 0; i &lt; nextGame.colleges.size; i++) {</span>
-<span class="nc bnc" id="L221" title="All 2 branches missed.">            if (nextGame.colleges.get(i).getCollegeName() == &quot;Alcuin&quot;) {</span>
-<span class="nc" id="L222">                nextGame.colleges.get(i).currentHealth = game.prefs.getFloat(&quot;AlcuinHealth&quot;);</span>
-<span class="nc" id="L223">                nextGame.colleges.get(i).team = game.prefs.getString(&quot;AlcuinTeam&quot;);</span>
-<span class="nc" id="L224">                nextGame.colleges.get(i).captured = game.prefs.getBoolean(&quot;AlcuinCaptured&quot;);</span>
-<span class="nc bnc" id="L225" title="All 2 branches missed.">            } else if (nextGame.colleges.get(i).getCollegeName() == &quot;Derwent&quot;) {</span>
-<span class="nc" id="L226">                nextGame.colleges.get(i).currentHealth = game.prefs.getFloat(&quot;DerwentHealth&quot;);</span>
-<span class="nc" id="L227">                nextGame.colleges.get(i).team = game.prefs.getString(&quot;DerwentTeam&quot;);</span>
-<span class="nc" id="L228">                nextGame.colleges.get(i).captured = game.prefs.getBoolean(&quot;DerwentCaptured&quot;);</span>
-<span class="nc bnc" id="L229" title="All 2 branches missed.">            } else if (nextGame.colleges.get(i).getCollegeName() == &quot;Langwith&quot;) {</span>
-<span class="nc" id="L230">                nextGame.colleges.get(i).currentHealth = game.prefs.getFloat(&quot;LangwithHealth&quot;);</span>
-<span class="nc" id="L231">                nextGame.colleges.get(i).team = game.prefs.getString(&quot;LangwithTeam&quot;);</span>
-<span class="nc" id="L232">                nextGame.colleges.get(i).captured = game.prefs.getBoolean(&quot;LangwithCaptured&quot;);</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">        for (int i = 0; i &lt; nextGame.colleges.size; i++) {</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">            if (nextGame.colleges.get(i).getCollegeName() == &quot;Alcuin&quot;) {</span>
+<span class="nc" id="L224">                nextGame.colleges.get(i).currentHealth = game.prefs.getFloat(&quot;AlcuinHealth&quot;);</span>
+<span class="nc" id="L225">                nextGame.colleges.get(i).team = game.prefs.getString(&quot;AlcuinTeam&quot;);</span>
+<span class="nc" id="L226">                nextGame.colleges.get(i).captured = game.prefs.getBoolean(&quot;AlcuinCaptured&quot;);</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">            } else if (nextGame.colleges.get(i).getCollegeName() == &quot;Derwent&quot;) {</span>
+<span class="nc" id="L228">                nextGame.colleges.get(i).currentHealth = game.prefs.getFloat(&quot;DerwentHealth&quot;);</span>
+<span class="nc" id="L229">                nextGame.colleges.get(i).team = game.prefs.getString(&quot;DerwentTeam&quot;);</span>
+<span class="nc" id="L230">                nextGame.colleges.get(i).captured = game.prefs.getBoolean(&quot;DerwentCaptured&quot;);</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">            } else if (nextGame.colleges.get(i).getCollegeName() == &quot;Langwith&quot;) {</span>
+<span class="nc" id="L232">                nextGame.colleges.get(i).currentHealth = game.prefs.getFloat(&quot;LangwithHealth&quot;);</span>
+<span class="nc" id="L233">                nextGame.colleges.get(i).team = game.prefs.getString(&quot;LangwithTeam&quot;);</span>
+<span class="nc" id="L234">                nextGame.colleges.get(i).captured = game.prefs.getBoolean(&quot;LangwithCaptured&quot;);</span>
             }
         }
 
-<span class="nc bnc" id="L236" title="All 2 branches missed.">        if (Objects.equals(game.prefs.getString(&quot;Difficulty&quot;), &quot;Easy&quot;)) {</span>
-<span class="nc" id="L237">            setEasy();</span>
-<span class="nc bnc" id="L238" title="All 2 branches missed.">        } else if (Objects.equals(game.prefs.getString(&quot;Difficulty&quot;), &quot;Normal&quot;)) {</span>
-<span class="nc" id="L239">            setNormal();</span>
-<span class="nc bnc" id="L240" title="All 2 branches missed.">        } else if (Objects.equals(game.prefs.getString(&quot;Difficulty&quot;), &quot;Hard&quot;)) {</span>
-<span class="nc" id="L241">            setHard();</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">        if (Objects.equals(game.prefs.getString(&quot;Difficulty&quot;), &quot;Easy&quot;)) {</span>
+<span class="nc" id="L239">            setEasy();</span>
+<span class="nc bnc" id="L240" title="All 2 branches missed.">        } else if (Objects.equals(game.prefs.getString(&quot;Difficulty&quot;), &quot;Normal&quot;)) {</span>
+<span class="nc" id="L241">            setNormal();</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">        } else if (Objects.equals(game.prefs.getString(&quot;Difficulty&quot;), &quot;Hard&quot;)) {</span>
+<span class="nc" id="L243">            setHard();</span>
         }
 
-<span class="nc" id="L244">        nextGame.setPaused(false);</span>
-<span class="nc" id="L245">        nextGame.setPlayerName(playerName);</span>
-<span class="nc" id="L246">        game.setScreen(nextGame);</span>
-<span class="nc" id="L247">    }</span>
+<span class="nc" id="L246">        nextGame.setPaused(false);</span>
+<span class="nc" id="L247">        nextGame.setPlayerName(playerName);</span>
+<span class="nc" id="L248">        game.setScreen(nextGame);</span>
+<span class="nc" id="L249">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
