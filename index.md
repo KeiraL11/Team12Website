@@ -1,4 +1,4 @@
----https://github.com/KeiraL11/Team12Website/blob/main/jar/yorkpirates-1.0.1.jar
+---
 layout: default
 ---
 # York Pirates!
