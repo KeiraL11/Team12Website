@@ -16,7 +16,7 @@ The game can be downloaded [here](/jar/yorkpirates-1.0.1.jar)
 - [**Use Case**](/usecase) - Shows our planned use case for the game.
 - [**Files**](/files) - Any additional files are listed here.
 - [**Unit Test Results**](/testreports) - Find our testing here.
-- [**JAR**] - Our JAR game can be found here!
+- [**JAR**](/Team12Website/jar/yorkpirates-1.0.1.jar) - Our JAR game can be found here!
 
 ![Game Logo](/media/Logo.gif)
 
