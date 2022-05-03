@@ -32,8 +32,7 @@ Project deliverables (stored via Google Drive) can be accessed from this page.
 ## Change Report
 [**Assessment 2: Google Drive**](https://docs.google.com/document/d/10-GnY2AUrXh3mXj6YEgZ6ez0DC8F-vV_TZaoeQG7ozg/edit?usp=sharing)
 <br/>
-[**Assessment 2: Download**]
-()
+[**Assessment 2: Download**](https://github.com/KeiraL11/Team12Website/raw/0ced95cde94501e08b6d459b035bf13d0d504b84/documents/Change2.pdf)
 <br/>
 [**Assessment 2: Change in Requirements Google Drive**](https://docs.google.com/document/d/1U32vQWgaPXttrebdofw7Gr2_Vjy8PC9FQyPILvRkhfg/edit?usp=sharing)
 <br/>
@@ -54,14 +53,14 @@ Project deliverables (stored via Google Drive) can be accessed from this page.
 ## Continuous Integration Report
 [**Assessment 2: Google Drive**](https://docs.google.com/document/d/1VCWv_6vDUpdc_eBjHz6ll6CbO3WYEnCeaiGE-V3Eqo8/edit?usp=sharing)
 <br/>
-[**Assessment 2: Download**]()
+[**Assessment 2: Download**](https://github.com/KeiraL11/Team12Website/raw/0ced95cde94501e08b6d459b035bf13d0d504b84/documents/CI2.pdf)
 
 ## Implementation Assessment 2
 [**Assessment 2: Google Drive**](https://docs.google.com/document/d/1rmLNaD8Q9RFDmxAtluboDJWJzveTL3JnYtm6CJAkjk0/edit?usp=sharing)
 <br/>
-[**Assessment 2: Download**]()
+[**Assessment 2: Download**](https://github.com/KeiraL11/Team12Website/raw/0ced95cde94501e08b6d459b035bf13d0d504b84/documents/Impl2.pdf)
 
 ## Software Testing
 [**Assessment 2: Google Drive**](https://docs.google.com/document/d/1kWOncVvD7jGW72l4fq39eWyiU89QMjVcr2yrVcsNm8A/edit?usp=sharing)
 <br/>
-[**Assessment 2: Download**]()
+[**Assessment 2: Download**](https://github.com/KeiraL11/Team12Website/raw/0ced95cde94501e08b6d459b035bf13d0d504b84/documents/Test2.pdf)
