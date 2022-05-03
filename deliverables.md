@@ -37,7 +37,7 @@ Project deliverables (stored via Google Drive) can be accessed from this page.
 <br/>
 [**Assessment 2: Change in Requirements Google Drive**](https://docs.google.com/document/d/1U32vQWgaPXttrebdofw7Gr2_Vjy8PC9FQyPILvRkhfg/edit?usp=sharing)
 <br/>
-[**Assessment 2: Change in Requirements Download**](https://github.com/KeiraL11/Team12Website/blob/8c28c41afec0393fa70696fe9dec489236a31f9a/documents/Req1A2.pdf)
+[**Assessment 2: Change in Requirements Download**](https://github.com/KeiraL11/Team12Website/raw/8c28c41afec0393fa70696fe9dec489236a31f9a/documents/Req1A2.pdf)
 <br/>
 [**Assessment 2: Change in Architecture Google Drive**](https://docs.google.com/document/d/16eiyZktg_zVBDlaH-orq-R1kQpcP0YBq7loDAX_8e2g/edit?usp=sharing)
 <br/>
