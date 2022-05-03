@@ -303,11 +303,8 @@ public class GameScreen extends ScreenAdapter {
 <span class="nc bnc" id="L303" title="All 4 branches missed.">        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) &amp;&amp; elapsedTime - lastPause &gt; 0.1f){</span>
 <span class="nc" id="L304">            gamePause();</span>
         }
-//        if(Gdx.input.isKeyJustPressed(Input.Keys.H)){
-//            player.printStats();
-//            printElaspedTime();
-//        }
-<span class="nc" id="L310">    }</span>
+
+<span class="nc" id="L307">    }</span>
 
     /**
      * Allows for the spawning of enemies in a random location, bound by the parameters.
@@ -321,24 +318,24 @@ public class GameScreen extends ScreenAdapter {
      */
     private void spawnEnemies(int lowerXbound, int upperXbound,
                               int lowerYbound, int upperYbound) throws Exception {
-<span class="nc" id="L324">        Enemy newEnemy = new Enemy(1000, 725,</span>
+<span class="nc" id="L321">        Enemy newEnemy = new Enemy(1000, 725,</span>
                 32, 16,
                 enemyTeam);
         // Enemy will spawn in a random location within the boundaries set by the parameters.
-<span class="nc" id="L328">        newEnemy.changeSpawn(this, lowerXbound, upperXbound, lowerYbound, upperYbound);</span>
+<span class="nc" id="L325">        newEnemy.changeSpawn(this, lowerXbound, upperXbound, lowerYbound, upperYbound);</span>
 
         //Pick an image to draw the enemy
-<span class="nc" id="L331">        int imagePicker = MathUtils.random(0,2);</span>
-<span class="nc bnc" id="L332" title="All 2 branches missed.">        if (imagePicker == 0) {</span>
-<span class="nc" id="L333">            newEnemy.changeImage(alcuinSprite);</span>
-<span class="nc bnc" id="L334" title="All 2 branches missed.">        } else if (imagePicker == 1){</span>
-<span class="nc" id="L335">            newEnemy.changeImage(derwentSprite);</span>
+<span class="nc" id="L328">        int imagePicker = MathUtils.random(0,2);</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">        if (imagePicker == 0) {</span>
+<span class="nc" id="L330">            newEnemy.changeImage(alcuinSprite);</span>
+<span class="nc bnc" id="L331" title="All 2 branches missed.">        } else if (imagePicker == 1){</span>
+<span class="nc" id="L332">            newEnemy.changeImage(derwentSprite);</span>
         } else{
-<span class="nc" id="L337">            newEnemy.changeImage(langwithSprite);</span>
+<span class="nc" id="L334">            newEnemy.changeImage(langwithSprite);</span>
         }
         //Add the enemy to the array of enemies.
-<span class="nc" id="L340">        enemies.add(newEnemy);</span>
-<span class="nc" id="L341">    }</span>
+<span class="nc" id="L337">        enemies.add(newEnemy);</span>
+<span class="nc" id="L338">    }</span>
     // Creation methods, made to reduce the constructor size.
     /**
      * creates the various power ups on the map.
@@ -347,55 +344,55 @@ public class GameScreen extends ScreenAdapter {
     private void createPowerUps() throws Exception {
         //PowerUps
         PowerUps newPower;
-<span class="nc" id="L350">        Array&lt;Texture&gt; powerSprites = new Array&lt;&gt;();</span>
+<span class="nc" id="L347">        Array&lt;Texture&gt; powerSprites = new Array&lt;&gt;();</span>
 
         //Add Give More Damage PowerUp
-<span class="nc" id="L353">        powerSprites.add(new Texture(&quot;give_more_damage.png&quot;));</span>
-<span class="nc" id="L354">        powerSprites.add(new Texture(&quot;give_more_damage_grey.png&quot;));</span>
-<span class="nc" id="L355">        newPower = new PowerUps(1000f, 1500,</span>
-<span class="nc" id="L356">                powerSprites.get(0).getWidth()*0.05f, powerSprites.get(0).getHeight()*0.05f,</span>
+<span class="nc" id="L350">        powerSprites.add(new Texture(&quot;give_more_damage.png&quot;));</span>
+<span class="nc" id="L351">        powerSprites.add(new Texture(&quot;give_more_damage_grey.png&quot;));</span>
+<span class="nc" id="L352">        newPower = new PowerUps(1000f, 1500,</span>
+<span class="nc" id="L353">                powerSprites.get(0).getWidth()*0.05f, powerSprites.get(0).getHeight()*0.05f,</span>
                 &quot;GiveMoreDamage&quot;);
-<span class="nc" id="L358">        newPower.changeImage(powerSprites);</span>
+<span class="nc" id="L355">        newPower.changeImage(powerSprites);</span>
         //newPower.addPower(-70, -20, 60); Think this was to add separately - do not want this.
-<span class="nc" id="L360">        powerups.add(newPower);</span>
-<span class="nc" id="L361">        powerSprites.clear();</span>
+<span class="nc" id="L357">        powerups.add(newPower);</span>
+<span class="nc" id="L358">        powerSprites.clear();</span>
 
         //Add Take More Damage PowerUp
-<span class="nc" id="L364">        powerSprites.add(new Texture(&quot;take_more_damage_grey.png&quot;));</span>
-<span class="nc" id="L365">        newPower = new PowerUps(3000, 3000,</span>
-<span class="nc" id="L366">                powerSprites.get(0).getWidth()*0.05f, powerSprites.get(0).getHeight()*0.05f,</span>
+<span class="nc" id="L361">        powerSprites.add(new Texture(&quot;take_more_damage_grey.png&quot;));</span>
+<span class="nc" id="L362">        newPower = new PowerUps(3000, 3000,</span>
+<span class="nc" id="L363">                powerSprites.get(0).getWidth()*0.05f, powerSprites.get(0).getHeight()*0.05f,</span>
                 &quot;TakeMoreDamage&quot;);
-<span class="nc" id="L368">        newPower.changeImage(powerSprites);</span>
-<span class="nc" id="L369">        powerups.add(newPower);</span>
-<span class="nc" id="L370">        powerSprites.clear();</span>
+<span class="nc" id="L365">        newPower.changeImage(powerSprites);</span>
+<span class="nc" id="L366">        powerups.add(newPower);</span>
+<span class="nc" id="L367">        powerSprites.clear();</span>
 
         //Add Immunity
-<span class="nc" id="L373">        powerSprites.add(new Texture(&quot;immunity_grey.png&quot;));</span>
-<span class="nc" id="L374">        newPower = new PowerUps(1500f, 2000f,</span>
-<span class="nc" id="L375">                powerSprites.get(0).getWidth()*0.05f, powerSprites.get(0).getHeight()*0.05f,</span>
+<span class="nc" id="L370">        powerSprites.add(new Texture(&quot;immunity_grey.png&quot;));</span>
+<span class="nc" id="L371">        newPower = new PowerUps(1500f, 2000f,</span>
+<span class="nc" id="L372">                powerSprites.get(0).getWidth()*0.05f, powerSprites.get(0).getHeight()*0.05f,</span>
                 &quot;Immunity&quot;);
-<span class="nc" id="L377">        newPower.changeImage(powerSprites);</span>
-<span class="nc" id="L378">        powerups.add(newPower);</span>
-<span class="nc" id="L379">        powerSprites.clear();</span>
+<span class="nc" id="L374">        newPower.changeImage(powerSprites);</span>
+<span class="nc" id="L375">        powerups.add(newPower);</span>
+<span class="nc" id="L376">        powerSprites.clear();</span>
 
         //Add Health Restore
-<span class="nc" id="L382">        powerSprites.add(new Texture(&quot;health_restore.png&quot;));</span>
-<span class="nc" id="L383">        newPower = new PowerUps(1000, 725,</span>
-<span class="nc" id="L384">                powerSprites.get(0).getWidth()*0.05f, powerSprites.get(0).getHeight()*0.05f,</span>
+<span class="nc" id="L379">        powerSprites.add(new Texture(&quot;health_restore.png&quot;));</span>
+<span class="nc" id="L380">        newPower = new PowerUps(1000, 725,</span>
+<span class="nc" id="L381">                powerSprites.get(0).getWidth()*0.05f, powerSprites.get(0).getHeight()*0.05f,</span>
                 &quot;HealthRestore&quot;);
-<span class="nc" id="L386">        newPower.changeImage(powerSprites);</span>
-<span class="nc" id="L387">        powerups.add(newPower);</span>
-<span class="nc" id="L388">        powerSprites.clear();</span>
+<span class="nc" id="L383">        newPower.changeImage(powerSprites);</span>
+<span class="nc" id="L384">        powerups.add(newPower);</span>
+<span class="nc" id="L385">        powerSprites.clear();</span>
 
         //Add Speed
-<span class="nc" id="L391">        powerSprites.add(new Texture(&quot;speed_grey.png&quot;));</span>
-<span class="nc" id="L392">        newPower = new PowerUps(2200, 800,</span>
-<span class="nc" id="L393">                powerSprites.get(0).getWidth()*0.05f, powerSprites.get(0).getHeight()*0.05f,</span>
+<span class="nc" id="L388">        powerSprites.add(new Texture(&quot;speed_grey.png&quot;));</span>
+<span class="nc" id="L389">        newPower = new PowerUps(2200, 800,</span>
+<span class="nc" id="L390">                powerSprites.get(0).getWidth()*0.05f, powerSprites.get(0).getHeight()*0.05f,</span>
                 &quot;Speed&quot;);
-<span class="nc" id="L395">        newPower.changeImage(powerSprites);</span>
-<span class="nc" id="L396">        powerups.add(newPower);</span>
-<span class="nc" id="L397">        powerSprites.clear();</span>
-<span class="nc" id="L398">    }</span>
+<span class="nc" id="L392">        newPower.changeImage(powerSprites);</span>
+<span class="nc" id="L393">        powerups.add(newPower);</span>
+<span class="nc" id="L394">        powerSprites.clear();</span>
+<span class="nc" id="L395">    }</span>
 
     /**
      * Creates the weather
@@ -404,21 +401,21 @@ public class GameScreen extends ScreenAdapter {
     private void createWeather() throws Exception {
         // Initialise weather
         Weather newWeather;
-<span class="nc" id="L407">        sprites.add(new Texture(&quot;Ice_5_16x16.png&quot;));</span>
-<span class="nc" id="L408">        newWeather = new Weather( 1920, 1520, sprites.get(0).getWidth() * 5f,</span>
-<span class="nc" id="L409">                sprites.get(0).getHeight() * 5f, &quot;&quot;);</span>
-<span class="nc" id="L410">        newWeather.changeImage(sprites);</span>
-<span class="nc" id="L411">        weatherArray.add(newWeather);</span>
-<span class="nc" id="L412">        newWeather = new Weather(2080, 560, sprites.get(0).getWidth() * 5f,</span>
-<span class="nc" id="L413">                sprites.get(0).getHeight() * 5f, &quot;&quot;);</span>
-<span class="nc" id="L414">        newWeather.changeImage(sprites);</span>
-<span class="nc" id="L415">        weatherArray.add(newWeather);</span>
-<span class="nc" id="L416">        newWeather = new Weather(1000, 600, sprites.get(0).getWidth() * 5f,</span>
-<span class="nc" id="L417">                sprites.get(0).getHeight() * 5f, &quot;&quot;);</span>
-<span class="nc" id="L418">        newWeather.changeImage(sprites);</span>
-<span class="nc" id="L419">        weatherArray.add(newWeather);</span>
-<span class="nc" id="L420">        sprites.clear();</span>
-<span class="nc" id="L421">    }</span>
+<span class="nc" id="L404">        sprites.add(new Texture(&quot;Ice_5_16x16.png&quot;));</span>
+<span class="nc" id="L405">        newWeather = new Weather( 1920, 1520, sprites.get(0).getWidth() * 5f,</span>
+<span class="nc" id="L406">                sprites.get(0).getHeight() * 5f, &quot;&quot;);</span>
+<span class="nc" id="L407">        newWeather.changeImage(sprites);</span>
+<span class="nc" id="L408">        weatherArray.add(newWeather);</span>
+<span class="nc" id="L409">        newWeather = new Weather(2080, 560, sprites.get(0).getWidth() * 5f,</span>
+<span class="nc" id="L410">                sprites.get(0).getHeight() * 5f, &quot;&quot;);</span>
+<span class="nc" id="L411">        newWeather.changeImage(sprites);</span>
+<span class="nc" id="L412">        weatherArray.add(newWeather);</span>
+<span class="nc" id="L413">        newWeather = new Weather(1000, 600, sprites.get(0).getWidth() * 5f,</span>
+<span class="nc" id="L414">                sprites.get(0).getHeight() * 5f, &quot;&quot;);</span>
+<span class="nc" id="L415">        newWeather.changeImage(sprites);</span>
+<span class="nc" id="L416">        weatherArray.add(newWeather);</span>
+<span class="nc" id="L417">        sprites.clear();</span>
+<span class="nc" id="L418">    }</span>
 
     /**
      * creates the colleges.
@@ -426,114 +423,114 @@ public class GameScreen extends ScreenAdapter {
      */
     private void createColleges() throws Exception{
         College newCollege;
-<span class="nc" id="L429">        Array&lt;Texture&gt; collegeSprites = new Array&lt;&gt;();</span>
+<span class="nc" id="L426">        Array&lt;Texture&gt; collegeSprites = new Array&lt;&gt;();</span>
 
         // Add alcuin
-<span class="nc" id="L432">        collegeSprites.add( new Texture(&quot;alcuin.png&quot;),</span>
+<span class="nc" id="L429">        collegeSprites.add( new Texture(&quot;alcuin.png&quot;),</span>
                 new Texture(&quot;alcuin_2.png&quot;));
-<span class="nc" id="L434">        newCollege = new College(1492, 665,</span>
-<span class="nc" id="L435">                collegeSprites.get(0).getWidth()*0.5f,collegeSprites.get(0).getWidth()*0.5f,</span>
+<span class="nc" id="L431">        newCollege = new College(1492, 665,</span>
+<span class="nc" id="L432">                collegeSprites.get(0).getWidth()*0.5f,collegeSprites.get(0).getWidth()*0.5f,</span>
                 &quot;Alcuin&quot;, enemyTeam);
-<span class="nc" id="L437">        newCollege.imageHandling(collegeSprites, &quot;alcuin_boat.png&quot;, player);</span>
-<span class="nc" id="L438">        newCollege.addBoat(30, -20, -60);</span>
-<span class="nc" id="L439">        newCollege.addBoat(-50, -40, -150);</span>
-<span class="nc" id="L440">        newCollege.addBoat(-40, -70, 0);</span>
-<span class="nc" id="L441">        colleges.add(newCollege);</span>
-<span class="nc" id="L442">        collegeSprites.clear();</span>
+<span class="nc" id="L434">        newCollege.imageHandling(collegeSprites, &quot;alcuin_boat.png&quot;, player);</span>
+<span class="nc" id="L435">        newCollege.addBoat(30, -20, -60);</span>
+<span class="nc" id="L436">        newCollege.addBoat(-50, -40, -150);</span>
+<span class="nc" id="L437">        newCollege.addBoat(-40, -70, 0);</span>
+<span class="nc" id="L438">        colleges.add(newCollege);</span>
+<span class="nc" id="L439">        collegeSprites.clear();</span>
 
         // Add derwent
-<span class="nc" id="L445">        collegeSprites.add( new Texture(&quot;derwent.png&quot;),</span>
+<span class="nc" id="L442">        collegeSprites.add( new Texture(&quot;derwent.png&quot;),</span>
                 new Texture(&quot;derwent_2.png&quot;));
-<span class="nc" id="L447">        newCollege = new College(1815, 2105,</span>
-<span class="nc" id="L448">                collegeSprites.get(0).getWidth()*0.8f, collegeSprites.get(0).getHeight()*0.8f,</span>
+<span class="nc" id="L444">        newCollege = new College(1815, 2105,</span>
+<span class="nc" id="L445">                collegeSprites.get(0).getWidth()*0.8f, collegeSprites.get(0).getHeight()*0.8f,</span>
                 &quot;Derwent&quot;, enemyTeam);
-<span class="nc" id="L450">        newCollege.imageHandling(collegeSprites, &quot;derwent_boat.png&quot;, player);</span>
-<span class="nc" id="L451">        newCollege.addBoat(-70, -20, 60);</span>
-<span class="nc" id="L452">        newCollege.addBoat(-70, -60, 70);</span>
-<span class="nc" id="L453">        colleges.add(newCollege);</span>
-<span class="nc" id="L454">        collegeSprites.clear();</span>
+<span class="nc" id="L447">        newCollege.imageHandling(collegeSprites, &quot;derwent_boat.png&quot;, player);</span>
+<span class="nc" id="L448">        newCollege.addBoat(-70, -20, 60);</span>
+<span class="nc" id="L449">        newCollege.addBoat(-70, -60, 70);</span>
+<span class="nc" id="L450">        colleges.add(newCollege);</span>
+<span class="nc" id="L451">        collegeSprites.clear();</span>
 
         // Add langwith
-<span class="nc" id="L457">        collegeSprites.add( new Texture(&quot;langwith.png&quot;),</span>
+<span class="nc" id="L454">        collegeSprites.add( new Texture(&quot;langwith.png&quot;),</span>
                 new Texture(&quot;langwith_2.png&quot;));
-<span class="nc" id="L459">        newCollege = new College(1300, 1530,</span>
-<span class="nc" id="L460">                collegeSprites.get(0).getWidth()*1.0f, collegeSprites.get(0).getHeight()*1.0f,</span>
+<span class="nc" id="L456">        newCollege = new College(1300, 1530,</span>
+<span class="nc" id="L457">                collegeSprites.get(0).getWidth()*1.0f, collegeSprites.get(0).getHeight()*1.0f,</span>
                 &quot;Langwith&quot;, enemyTeam);
-<span class="nc" id="L462">        newCollege.imageHandling(collegeSprites, &quot;langwith_boat.png&quot;, player);</span>
-<span class="nc" id="L463">        newCollege.addBoat(-150, -50, 60);</span>
-<span class="nc" id="L464">        newCollege.addBoat(-120, -10, -60);</span>
-<span class="nc" id="L465">        newCollege.addBoat(-10, -40, 230);</span>
-<span class="nc" id="L466">        newCollege.addBoat(140, 10, 300);</span>
-<span class="nc" id="L467">        newCollege.addBoat(200, 35, 135);</span>
-<span class="nc" id="L468">        colleges.add(newCollege);</span>
-<span class="nc" id="L469">        collegeSprites.clear();</span>
+<span class="nc" id="L459">        newCollege.imageHandling(collegeSprites, &quot;langwith_boat.png&quot;, player);</span>
+<span class="nc" id="L460">        newCollege.addBoat(-150, -50, 60);</span>
+<span class="nc" id="L461">        newCollege.addBoat(-120, -10, -60);</span>
+<span class="nc" id="L462">        newCollege.addBoat(-10, -40, 230);</span>
+<span class="nc" id="L463">        newCollege.addBoat(140, 10, 300);</span>
+<span class="nc" id="L464">        newCollege.addBoat(200, 35, 135);</span>
+<span class="nc" id="L465">        colleges.add(newCollege);</span>
+<span class="nc" id="L466">        collegeSprites.clear();</span>
 
         // Add goodricke
-<span class="nc" id="L472">        collegeSprites.add( new Texture(&quot;goodricke.png&quot;));</span>
-<span class="nc" id="L473">        newCollege = new College(700, 525,</span>
-<span class="nc" id="L474">                collegeSprites.get(0).getWidth()*0.7f, collegeSprites.get(0).getHeight()*0.7f,</span>
+<span class="nc" id="L469">        collegeSprites.add( new Texture(&quot;goodricke.png&quot;));</span>
+<span class="nc" id="L470">        newCollege = new College(700, 525,</span>
+<span class="nc" id="L471">                collegeSprites.get(0).getWidth()*0.7f, collegeSprites.get(0).getHeight()*0.7f,</span>
                 &quot;Home&quot;,playerTeam);
-<span class="nc" id="L476">        newCollege.imageHandling(collegeSprites, &quot;ship1.png&quot;, player);</span>
-<span class="nc" id="L477">        colleges.add(newCollege);</span>
-<span class="nc" id="L478">        collegeSprites.clear();</span>
-<span class="nc" id="L479">    }</span>
+<span class="nc" id="L473">        newCollege.imageHandling(collegeSprites, &quot;ship1.png&quot;, player);</span>
+<span class="nc" id="L474">        colleges.add(newCollege);</span>
+<span class="nc" id="L475">        collegeSprites.clear();</span>
+<span class="nc" id="L476">    }</span>
     /**
      * Called to switch from the current screen to the pause screen, while retaining the current screen's information.
      */
     public void gamePause(){
-<span class="nc" id="L484">        isPaused = true;</span>
-<span class="nc" id="L485">        game.setScreen(new PauseScreen(game,this));</span>
-<span class="nc" id="L486">    }</span>
+<span class="nc" id="L481">        isPaused = true;</span>
+<span class="nc" id="L482">        game.setScreen(new PauseScreen(game,this));</span>
+<span class="nc" id="L483">    }</span>
 
     /**
      * Called to switch from the current screen to the end screen.
      * @param win   The boolean determining the win state of the game.
      */
     public void gameEnd(boolean win){
-<span class="nc" id="L493">        game.prefs.clear();</span>
-<span class="nc" id="L494">        game.prefs.flush();</span>
-<span class="nc" id="L495">        game.setScreen(new EndScreen(game, this, win));</span>
-<span class="nc" id="L496">    }</span>
+<span class="nc" id="L490">        game.prefs.clear();</span>
+<span class="nc" id="L491">        game.prefs.flush();</span>
+<span class="nc" id="L492">        game.setScreen(new EndScreen(game, this, win));</span>
+<span class="nc" id="L493">    }</span>
 
     /**
      * Called to switch from the current screen to the title screen.
      */
     public void gameReset() throws Exception {
-<span class="nc" id="L502">        game.setScreen(new TitleScreen(game));</span>
-<span class="nc" id="L503">    }</span>
+<span class="nc" id="L499">        game.setScreen(new TitleScreen(game));</span>
+<span class="nc" id="L500">    }</span>
 
     /**
      * Used to encapsulate elapsedTime.
      * @return  Time since the current session started.
      */
-<span class="nc" id="L509">    public float getElapsedTime() { return elapsedTime; }</span>
+<span class="nc" id="L506">    public float getElapsedTime() { return elapsedTime; }</span>
 
     /**
      * Used to toggle whether the camera follows the player.
      * @param follow  Whether the camera will follow the player.
      */
-<span class="nc" id="L515">    public void toggleFollowPlayer(boolean follow) { this.followPlayer = follow; }</span>
+<span class="nc" id="L512">    public void toggleFollowPlayer(boolean follow) { this.followPlayer = follow; }</span>
 
     /**
      * Get the player's name for the current session.
      * @return  Player's name.
      */
-<span class="nc" id="L521">    public String getPlayerName() { return playerName; }</span>
+<span class="nc" id="L518">    public String getPlayerName() { return playerName; }</span>
 
     /**
      * Set the player's name.
      * @param playerName    Chosen player name.
      */
     public void setPlayerName(String playerName) {
-<span class="nc" id="L528">        this.playerName = playerName;</span>
-<span class="nc" id="L529">        gameHUD.updateName(this);</span>
-<span class="nc" id="L530">    }</span>
+<span class="nc" id="L525">        this.playerName = playerName;</span>
+<span class="nc" id="L526">        gameHUD.updateName(this);</span>
+<span class="nc" id="L527">    }</span>
 
     /**
      * Get the player.
      * @return  The player.
      */
-<span class="nc" id="L536">    public Player getPlayer() { return player; }</span>
+<span class="nc" id="L533">    public Player getPlayer() { return player; }</span>
     // Setting the difficulty of the game
     // The player method will change properties around the player
     // the rest will change the different enemy spawning properties.
@@ -543,90 +540,90 @@ public class GameScreen extends ScreenAdapter {
      * No ambushes
      */
     public void setEasy(){
-<span class="nc" id="L546">        player.setEasy();</span>
-<span class="nc" id="L547">        enemySpawnFreqency = 15000;</span>
-<span class="nc" id="L548">        totalEnemiesAllowed = 5;</span>
-<span class="nc" id="L549">        ambushRate = 999999999;</span>
-<span class="nc" id="L550">        ambush_chance = 0;</span>
-<span class="nc" id="L551">        ambush = false;</span>
-<span class="nc" id="L552">        ambushSize = 0;</span>
-<span class="nc" id="L553">    }</span>
+<span class="nc" id="L543">        player.setEasy();</span>
+<span class="nc" id="L544">        enemySpawnFreqency = 15000;</span>
+<span class="nc" id="L545">        totalEnemiesAllowed = 5;</span>
+<span class="nc" id="L546">        ambushRate = 999999999;</span>
+<span class="nc" id="L547">        ambush_chance = 0;</span>
+<span class="nc" id="L548">        ambush = false;</span>
+<span class="nc" id="L549">        ambushSize = 0;</span>
+<span class="nc" id="L550">    }</span>
 
     /**
      * Sets the game to &quot;normal mode&quot;
      */
     public void setNormal(){
-<span class="nc" id="L559">        player.setNormal();</span>
-<span class="nc" id="L560">        enemySpawnFreqency = 10000;</span>
-<span class="nc" id="L561">        totalEnemiesAllowed = 10;</span>
-<span class="nc" id="L562">        ambushRate = 25000;</span>
-<span class="nc" id="L563">        ambush_chance = 0.1f;</span>
-<span class="nc" id="L564">        ambush = true;</span>
-<span class="nc" id="L565">        ambushSize = 3;</span>
-<span class="nc" id="L566">    }</span>
+<span class="nc" id="L556">        player.setNormal();</span>
+<span class="nc" id="L557">        enemySpawnFreqency = 10000;</span>
+<span class="nc" id="L558">        totalEnemiesAllowed = 10;</span>
+<span class="nc" id="L559">        ambushRate = 25000;</span>
+<span class="nc" id="L560">        ambush_chance = 0.1f;</span>
+<span class="nc" id="L561">        ambush = true;</span>
+<span class="nc" id="L562">        ambushSize = 3;</span>
+<span class="nc" id="L563">    }</span>
 
     /**
      * Sets the game to &quot;hard mode&quot;
      */
     public void setHard(){
-<span class="nc" id="L572">        player.setHard();</span>
-<span class="nc" id="L573">        enemySpawnFreqency = 5000;</span>
-<span class="nc" id="L574">        ambushRate = 20000;</span>
-<span class="nc" id="L575">        totalEnemiesAllowed = 11;</span>
-<span class="nc" id="L576">        ambush_chance = 0.25f;</span>
-<span class="nc" id="L577">        ambush = true;</span>
-<span class="nc" id="L578">        ambushSize = 4;</span>
-<span class="nc" id="L579">    }</span>
+<span class="nc" id="L569">        player.setHard();</span>
+<span class="nc" id="L570">        enemySpawnFreqency = 5000;</span>
+<span class="nc" id="L571">        ambushRate = 20000;</span>
+<span class="nc" id="L572">        totalEnemiesAllowed = 11;</span>
+<span class="nc" id="L573">        ambush_chance = 0.25f;</span>
+<span class="nc" id="L574">        ambush = true;</span>
+<span class="nc" id="L575">        ambushSize = 4;</span>
+<span class="nc" id="L576">    }</span>
 
 
     /**
      * Get the main game class.
      * @return  The main game class.
      */
-<span class="nc" id="L586">    public YorkPirates getMain() { return game; }</span>
+<span class="nc" id="L583">    public YorkPirates getMain() { return game; }</span>
 
     /**
      * Get the game's HUD.
      * @return  The HUD.
      */
-<span class="nc" id="L592">    public HUD getHUD() { return gameHUD; }</span>
+<span class="nc" id="L589">    public HUD getHUD() { return gameHUD; }</span>
 
     /**
      * Set whether the game is paused or not.
      * @param paused    Whether the game is paused.
      */
     public void setPaused(boolean paused) {
-<span class="nc bnc" id="L599" title="All 4 branches missed.">        if (!paused &amp;&amp; isPaused) lastPause = elapsedTime;</span>
-<span class="nc" id="L600">        isPaused = paused;</span>
-<span class="nc" id="L601">    }</span>
+<span class="nc bnc" id="L596" title="All 4 branches missed.">        if (!paused &amp;&amp; isPaused) lastPause = elapsedTime;</span>
+<span class="nc" id="L597">        isPaused = paused;</span>
+<span class="nc" id="L598">    }</span>
 
     /**
      * Gets whether the game is paused.
      * @return  True if the game is paused.
      */
-<span class="nc" id="L607">    public boolean isPaused() { return  isPaused; }</span>
+<span class="nc" id="L604">    public boolean isPaused() { return  isPaused; }</span>
 
     /**
      * Get the viewport.
      * @return  The viewport.
      */
-<span class="nc" id="L613">    public FitViewport getViewport() { return viewport; }</span>
+<span class="nc" id="L610">    public FitViewport getViewport() { return viewport; }</span>
 
     /**
      * Disposes of disposables when game finishes execution.
      */
     @Override
     public void dispose(){
-<span class="nc" id="L620">        HUDBatch.dispose();</span>
-<span class="nc" id="L621">        tiledMap.dispose();</span>
-<span class="nc" id="L622">        music.dispose();</span>
-<span class="nc" id="L623">    }</span>
+<span class="nc" id="L617">        HUDBatch.dispose();</span>
+<span class="nc" id="L618">        tiledMap.dispose();</span>
+<span class="nc" id="L619">        music.dispose();</span>
+<span class="nc" id="L620">    }</span>
 
     /**
      * Used for debugging.
      */
     public void printElaspedTime(){
-<span class="nc" id="L629">        System.out.println(&quot;Elasped Time: &quot; + getElapsedTime());</span>
-<span class="nc" id="L630">    }</span>
+<span class="nc" id="L626">        System.out.println(&quot;Elasped Time: &quot; + getElapsedTime());</span>
+<span class="nc" id="L627">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

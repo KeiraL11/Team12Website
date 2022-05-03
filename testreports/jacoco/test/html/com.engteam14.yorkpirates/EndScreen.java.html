@@ -59,46 +59,48 @@ public class EndScreen extends ScreenAdapter {
 <span class="nc" id="L59">        ImageButton quitB = new ImageButton(skin, &quot;Quit&quot;);</span>
 <span class="nc" id="L60">        ImageButton restartB = new ImageButton(skin, &quot;Restart&quot;);</span>
 
-<span class="nc" id="L62">        quitB.addListener(new ClickListener() {</span>
+        // Left click the quit button, the game will quit
+<span class="nc" id="L63">        quitB.addListener(new ClickListener() {</span>
             public void clicked(InputEvent event, float x, float y) {
-<span class="nc" id="L64">                Gdx.app.exit();</span>
-<span class="nc" id="L65">            }</span>
+<span class="nc" id="L65">                Gdx.app.exit();</span>
+<span class="nc" id="L66">            }</span>
         });
 
-<span class="nc" id="L68">        restartB.addListener(new ClickListener() {</span>
+        // Left click the restart button, the game will restart
+<span class="nc" id="L70">        restartB.addListener(new ClickListener() {</span>
             public void clicked(InputEvent event, float x, float y) {
                 try {
-<span class="nc" id="L71">                    screen.gameReset();</span>
-<span class="nc" id="L72">                } catch (Exception e) {</span>
-<span class="nc" id="L73">                    throw new RuntimeException(e);</span>
-<span class="nc" id="L74">                }</span>
-<span class="nc" id="L75">            }</span>
+<span class="nc" id="L73">                    screen.gameReset();</span>
+<span class="nc" id="L74">                } catch (Exception e) {</span>
+<span class="nc" id="L75">                    throw new RuntimeException(e);</span>
+<span class="nc" id="L76">                }</span>
+<span class="nc" id="L77">            }</span>
         });
 
         // Add title image to table
-<span class="nc" id="L79">        table.row();</span>
-<span class="nc" id="L80">        title.setScaling(Scaling.fit);</span>
-<span class="nc" id="L81">        table.add(title).expand();</span>
+<span class="nc" id="L81">        table.row();</span>
+<span class="nc" id="L82">        title.setScaling(Scaling.fit);</span>
+<span class="nc" id="L83">        table.add(title).expand();</span>
 
         // Add stats to table
-<span class="nc" id="L84">        table.row();</span>
-<span class="nc" id="L85">        table.add(time).expand();</span>
 <span class="nc" id="L86">        table.row();</span>
-<span class="nc" id="L87">        table.add(points).expand();</span>
+<span class="nc" id="L87">        table.add(time).expand();</span>
 <span class="nc" id="L88">        table.row();</span>
-<span class="nc" id="L89">        table.add(loot).expand();</span>
+<span class="nc" id="L89">        table.add(points).expand();</span>
+<span class="nc" id="L90">        table.row();</span>
+<span class="nc" id="L91">        table.add(loot).expand();</span>
 
         // Make buttons subtable
-<span class="nc" id="L92">        table.row();</span>
-<span class="nc" id="L93">        Table buttons = new Table();</span>
-<span class="nc" id="L94">        buttons.add(restartB).expand().size(200f).pad(100f);</span>
-<span class="nc" id="L95">        buttons.add(quitB).expand().size(200f).pad(100f);</span>
+<span class="nc" id="L94">        table.row();</span>
+<span class="nc" id="L95">        Table buttons = new Table();</span>
+<span class="nc" id="L96">        buttons.add(restartB).expand().size(200f).pad(100f);</span>
+<span class="nc" id="L97">        buttons.add(quitB).expand().size(200f).pad(100f);</span>
         if(YorkPirates.DEBUG_ON) buttons.setDebug(true);
-<span class="nc" id="L97">        table.add(buttons);</span>
+<span class="nc" id="L99">        table.add(buttons);</span>
 
         // Add table to the stage
-<span class="nc" id="L100">        endStage.addActor(table);</span>
-<span class="nc" id="L101">    }</span>
+<span class="nc" id="L102">        endStage.addActor(table);</span>
+<span class="nc" id="L103">    }</span>
 
     /**
      * Is called once every frame. Runs update() and then renders the title screen.
@@ -107,22 +109,22 @@ public class EndScreen extends ScreenAdapter {
     @Override
     public void render(float delta){
         try {
-<span class="nc" id="L110">            update();</span>
-<span class="nc" id="L111">        } catch (Exception e) {</span>
-<span class="nc" id="L112">            throw new RuntimeException(e);</span>
-<span class="nc" id="L113">        }</span>
-<span class="nc" id="L114">        ScreenUtils.clear(0.1f, 0.6f, 0.6f, 1.0f);</span>
-<span class="nc" id="L115">        screen.render(delta); // Draws the gameplay screen as a background</span>
-<span class="nc" id="L116">        endStage.draw(); // Draws the stage</span>
-<span class="nc" id="L117">    }</span>
+<span class="nc" id="L112">            update();</span>
+<span class="nc" id="L113">        } catch (Exception e) {</span>
+<span class="nc" id="L114">            throw new RuntimeException(e);</span>
+<span class="nc" id="L115">        }</span>
+<span class="nc" id="L116">        ScreenUtils.clear(0.1f, 0.6f, 0.6f, 1.0f);</span>
+<span class="nc" id="L117">        screen.render(delta); // Draws the gameplay screen as a background</span>
+<span class="nc" id="L118">        endStage.draw(); // Draws the stage</span>
+<span class="nc" id="L119">    }</span>
 
     /**
      * Is called once every frame. Used for calculations that take place before rendering / inputs.
      */
     private void update() throws Exception {
-<span class="nc bnc" id="L123" title="All 4 branches missed.">        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){</span>
-<span class="nc" id="L124">            game.setScreen(new TitleScreen(game));</span>
+<span class="nc bnc" id="L125" title="All 4 branches missed.">        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){</span>
+<span class="nc" id="L126">            game.setScreen(new TitleScreen(game));</span>
         }
-<span class="nc" id="L126">    }</span>
+<span class="nc" id="L128">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
