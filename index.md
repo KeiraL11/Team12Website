@@ -6,7 +6,7 @@ layout: default
 This is the website for the York Pirates! game.
 This game is made by Bass<sub>2</sub> (Team 14 for Assessment 1 and Team 12 for Assessment 2) for an Engineering 1 group project at the University of York.
 
-The game can be downloaded [here](https://github.com/KeiraL11/Team12Website/blob/main/jar/yorkpirates-1.0.1.jar)
+The game can be downloaded [here](/jar/yorkpirates-1.0.1.jar)
 
 - [**Home**]() - This page will go over what York Pirates! is, how to play it, and provide information about how our code works.
 - [**GitHub**](https://github.com/engteam14/yorkpirates) - Our GitHub repository contains all the code for the project, as well as downloads.
